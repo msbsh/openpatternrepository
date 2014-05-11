@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition     xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <div>
+
+        <h:form>
+
+            <ul>
+                <c:choose>
+                    <c:when test="#{currentStart == true}"><li class="current"><a href="welcome.iface"><h:outputText value="#{common['mainMenu.start']}" /></a></li></c:when>
+                    <c:otherwise><li><a href="welcome.iface"><h:outputText value="#{common['mainMenu.start']}" /></a></li></c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="#{currentBrowse == true}"><li class="current"><a href="browse.iface"><h:outputText value="#{common['mainMenu.browse']}" /></a></li></c:when>
+                    <c:otherwise><li><a href="browse.iface"><h:outputText value="#{common['mainMenu.browse']}" /></a></li></c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="#{currentSearch== true}"><li class="current"><a href="search.iface"><h:outputText value="#{common['mainMenu.search']}" /></a></li></c:when>
+                    <c:otherwise><li><a href="search.iface"><h:outputText value="#{common['mainMenu.search']}" /></a></li></c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="#{currentAdd == true}"><li class="current"><a href="add.iface"><h:outputText value="#{common['mainMenu.add']}" /></a></li></c:when>
+                    <c:otherwise><li><a href="add.iface"><h:outputText value="#{common['mainMenu.add']}" /></a></li></c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="#{currentLearnMore == true}"><li class="current"><a href="learnMore.iface"><h:outputText value="#{common['mainMenu.learnMore']}" /></a></li></c:when>
+                    <c:otherwise><li><a href="learnMore.iface"><h:outputText value="#{common['mainMenu.learnMore']}" /></a></li></c:otherwise>
+                </c:choose>
+
+<!-- <li><a href=""><h:outputText value="#{common['mainMenu.decisions']}" action="DECISION" /></a></li>
+<li><a href=""><h:outputText value="#{common['mainMenu.tools']}" /></a></li>
+                -->
+            </ul>
+        </h:form>
+    </div>
+
+</ui:composition>

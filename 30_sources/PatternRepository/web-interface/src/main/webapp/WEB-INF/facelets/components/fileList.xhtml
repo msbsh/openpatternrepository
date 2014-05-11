@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ice:panelSeries value="#{files}" var="file" rendered="#{!empty files}">
+
+        <ice:panelGroup style="display:inline-block;margin:2px;border: 1px solid gray; background-color:lightgray;width:152px;padding:4px;">
+            <div class="right" style="margin-bottom: 5px;">
+                <ice:commandLink value="X" style="color: gray;font-weight: bold;text-decoration:none;" actionListener="#{bean[removeCallback]}" rendered="#{removeCallback != null}">
+                    <f:attribute name="file" value="#{file}"/>
+                </ice:commandLink>
+            </div>
+            <a href="file/#{file.id}" target="_blank" title="#{form['label.downloadFile']}" >
+                <div style="width:150px;background-color:gray;height:150px;position:relative;" class="center">
+
+                    <ice:graphicImage value="/file/xy150px-#{file.id}" styleClass="listFile" rendered="${fn:contains(file.mime, 'image')}" />
+                    <ice:graphicImage value="images/page_white_acrobat.png" styleClass="listFile" rendered="${fn:contains(file.mime, 'pdf')}" />
+                    <ice:graphicImage value="images/page_white_excel.png" styleClass="listFile" rendered="${fn:contains(file.mime, 'excel')}" />
+                    <ice:graphicImage value="images/page_white_powerpoint.png" styleClass="listFile" rendered="${fn:contains(file.mime, 'powerpoint')}" />
+                    <ice:graphicImage value="images/page_white_word.png" styleClass="listFile" rendered="${fn:contains(file.mime, 'word')}" />
+                    <ice:graphicImage value="images/page_white_text.png" styleClass="listFile" rendered="${!(
+                                                                                                           fn:contains(file.mime, 'image')      ||
+                                                                                                           fn:contains(file.mime, 'pdf')        ||
+                                                                                                           fn:contains(file.mime, 'excel')      ||
+                                                                                                           fn:contains(file.mime, 'powerpoint') ||
+                                                                                                           fn:contains(file.mime, 'word')
+                                                                                                           )}"/>
+                </div>
+            </a>
+            <ice:outputText value="FileID: #{file.id} (#{file.mime})" escape="false" /><br />
+            <small><ice:outputText value="(#{func:shortenDots(file.name,18,'...')})" /></small><br />
+            <small><ice:outputText value="#{file.license.name}" /></small>
+        </ice:panelGroup>
+    </ice:panelSeries>
+    <ice:outputText value="#{form['label.noFiles']}" rendered="#{empty files}" />
+
+</ui:composition>

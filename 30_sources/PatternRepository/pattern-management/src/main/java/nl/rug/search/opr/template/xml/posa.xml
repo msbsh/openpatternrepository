@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template>
+    <mappings>
+        <mapping>
+            <name>Intent</name>
+            <description></description>
+            <identifier>intent</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+        
+        <mapping>
+            <name>Motivation</name>
+            <description></description>
+           <identifier>motivation</identifier>
+            <mandatory>0</mandatory>
+            <type>PROBLEM</type>
+        </mapping>
+        
+        <mapping>
+            <name>Applicability</name>
+            <description></description>
+            <identifier>applicability</identifier>
+            <mandatory>0</mandatory>
+            <type>CONTEXT</type>
+        </mapping>
+
+        <mapping>
+            <name>Structure</name>
+            <description></description>
+            <identifier>structure</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+        
+        <mapping>
+            <name>Participants</name>
+            <description></description>
+            <identifier>participants</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Collaborations</name>
+            <description></description>
+            <identifier>collaborations</identifier>
+            <type>RELATIONSHIP</type>
+        </mapping>
+    
+        <mapping>
+            <name>Consequences</name>
+            <description></description>
+            <identifier>consequences</identifier>
+            <type>PROBLEM</type>
+        </mapping>
+        
+        <mapping>
+            <name>Consequences</name>
+            <description></description>
+            <identifier>consequencelist</identifier>
+            <type>CONSEQUENCES</type>
+        </mapping>
+        
+        <mapping>
+            <name>Implementation</name>
+            <description></description>
+            <identifier>implementation</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+
+         <mapping>
+            <name>Sample code</name>
+            <description></description>
+            <identifier>sample</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+    </mappings>
+</template>

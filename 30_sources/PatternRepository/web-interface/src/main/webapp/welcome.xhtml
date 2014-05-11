@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+
+<ui:composition template="WEB-INF/inc/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:param name="currentStart" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        Welcome
+    </ui:define>
+
+    <ui:define name="page">
+        <div id="content">
+
+            <h1>Welcome to the Open Pattern Repository</h1>                                                                 
+            <p><h:outputText value="#{common['mainMenu.welcome']}" /></p>
+            <p><h:outputText value="#{common['mainMenu.info']}" /></p>
+
+            <h1>What do you want to do?</h1>
+
+            <a href="browse.iface"><img src="images/package.png" style="vertical-align: middle; padding-left: 20px" border="1" title="Browse catalog" alt="Image browse" /></a>
+            <a href="search.iface"><img src="images/search2.png" style="vertical-align: middle; padding-left: 20px" border="1" title="Search patterns" alt="Image Search" /></a>
+            <a href="add.iface"><img src="images/add.png" style="vertical-align: middle;" border="1" title="Add a pattern" alt="Image Add Pattern" /></a>
+            <!--
+            <ul>
+                <br />
+                <li><b>Patterns and Technologies</b></li>
+                <ul>
+                    <li><a href="add.iface">Add</a></li>
+                    <li><a href="browse.iface">Browse by Category</a></li>
+                    <li><a href="search.iface">Search</a></li>
+                </ul>
+                <br />
+            </ul>
+
+            <b>Templates</b>
+            <ul>
+                <li><a href="addTemplate.iface">Add</a></li>
+                <li><a href="listTemplates.iface">List</a></li>
+            </ul>
+
+            <li><b>Design Decision</b></li>
+            <ul>
+                <li><a href="manageDecision.iface">Add</a></li>
+                <li><a href="viewDecision.iface">View</a></li>
+                <li><a href="listDecisions.iface">List</a></li>
+                <li><a href="treeViewDecisions.iface">Tree View</a></li>
+            </ul>
+            <br />
+            <li><b>Debug and Testing</b></li>
+            <ul>
+                <li><a href="initialize.iface">Create Test Patterns</a></li>
+            </ul>
+            -->
+
+        </div>
+        <div id="sidebar">
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b>
+                                <ice:outputFormat value="#{help['welcome.headlineRelease']}">
+                                    <f:param value="#{deployInformationController.presumableDeployDate}" />
+                                </ice:outputFormat>
+                            </b><br />
+                            <ice:outputText value="#{help['welcome.release']}" escape="false" /><br />
+                            <ice:outputText value="#{help['welcome.questions']}" escape="false" /><br />
+                            <!--<ice:outputText value="Version: #{common['app.version']}" escape="false" />-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/question.png" alt="Found a bug?" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="#{help['welcome.bug.headline']}" /></b><br />
+                            <ice:outputText value="#{help['welcome.bug.report']}" escape="false" /><a href="http://code.google.com/p/openpatternrepository/issues/list" target="_blank">OPR Bugtracker</a> <br />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

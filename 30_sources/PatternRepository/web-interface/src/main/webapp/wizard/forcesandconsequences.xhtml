@@ -1,0 +1,166 @@
+<ui:composition template="../WEB-INF/inc/wizard.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+    <ui:define name="pagetitle">
+        Forces and consequences
+    </ui:define>
+
+    <ui:define name="wizardstep">
+
+        <div id="content">
+            <h2>Consequences</h2>
+            <br />
+            <ice:commandButton value="Add Consequence" actionListener="#{formattingStep.addConsequence}" />
+            <br /><br />
+            <ice:panelSeries value="#{formattingStep.wizard.patternVersion.consequences}" var="c">
+
+                <ice:panelGroup  style="border: 1px solid #48a659; width: 90%;color: #fff;background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                    <ice:commandLink actionListener="#{formattingStep.changeEditConsequence}" style="color: #48a659; font-weight: bold; text-decoration: none;">
+                        <f:attribute value="#{c}" name ="consequence" />
+                        <ice:outputText value="view" rendered="#{c == formattingStep.editConsequence}" />
+                        <ice:outputText value="edit" rendered="#{c != formattingStep.editConsequence}" />
+                    </ice:commandLink>
+
+                    <ice:commandLink actionListener="#{formattingStep.remove}" value="X" immediate="true" style="color: #48a659; font-weight: bold; text-decoration: none;float:right">
+                        <f:attribute value="#{c}" name="consequence" />
+                    </ice:commandLink>
+
+                    <ice:panelGroup rendered="#{c != formattingStep.editConsequence}">
+                        <b><ice:outputText value="#{c.qualityAttribute.name}" nospan="true"/></b>
+                        <ice:panelGroup styleClass="#{c.impactIndication}" style="display: inline-block;margin-left: 5px;"></ice:panelGroup>
+                        <p>
+                        <ice:outputText value="#{func:shorten(c.description,150)}" />
+                        </p>
+
+                    </ice:panelGroup>
+
+                    <ice:panelGroup rendered="#{c == formattingStep.editConsequence}">
+
+                        <ice:selectOneListbox   value="#{c.qualityAttribute}"
+                                                style="display: inline-block;"
+                                                size="1"
+                                                converter="qualityAttributeConverter">
+                            <f:selectItem itemValue="" itemLabel="Please Select" />
+                            <f:selectItems value="#{qualityAttributes.selectItems}" />
+                        </ice:selectOneListbox>
+                        <br />Please Evaluate
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="--" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.veryNegative?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORC" value="verynegative" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.negative?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORC" value="negative" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-+" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.neutral?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORC" value="neutral" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="+" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.positive?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORC" value="positive" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="++" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.veryPositive?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORC" value="verypositive" />
+                        </ice:commandLink>
+
+                        <ice:inputTextarea value="#{c.description}" rows="5"/>
+                    </ice:panelGroup>
+                </ice:panelGroup>
+
+
+            </ice:panelSeries>
+
+            <br /><br />
+            <h2>Forces</h2>
+            <br />
+            <ice:commandButton value="Add Force" actionListener="#{formattingStep.addForce}" />
+            <br /><br />
+            <ice:panelSeries value="#{formattingStep.wizard.patternVersion.forces}" var="f">
+                <ice:panelGroup  style="border: 1px solid #48a659; width: 90%;color: #fff;background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                    <ice:commandLink actionListener="#{formattingStep.changeEditForce}" style="color: #48a659; font-weight: bold; text-decoration: none;">
+                        <f:attribute value="#{f}" name="force" />
+                        <ice:outputText value="view" rendered="#{f == formattingStep.editForce}" />
+                        <ice:outputText value="edit" rendered="#{f != formattingStep.editForce}" />
+                    </ice:commandLink>
+                    <ice:commandLink actionListener="#{formattingStep.remove}" value="X" immediate="true" style="color: #48a659; font-weight: bold; text-decoration: none;float:right">
+                        <f:attribute value="#{f}" name="force" />
+                    </ice:commandLink>
+                    <ice:panelGroup rendered="#{f != formattingStep.editForce}">
+                        <b><ice:outputText value="#{f.qualityAttribute.name}" nospan="true"/></b>
+                        <ice:panelGroup styleClass="#{f.impactIndication}" style="display: inline-block;margin-left: 5px;"></ice:panelGroup>
+                        <p>
+                        <ice:outputText value="#{f.description}" />
+                        </p>
+                        <p>
+                        <ice:outputText value="#{f.functionality}" />
+                        </p>
+                    </ice:panelGroup>
+
+                    <ice:panelGroup rendered="#{f == formattingStep.editForce}">
+
+                        <ice:selectOneListbox   value="#{f.qualityAttribute}"
+                                                style="display: inline-block;"
+                                                size="1"
+                                                converter="qualityAttributeConverter">
+                            <f:selectItem itemValue="" itemLabel="Please Select" />
+                            <f:selectItems value="#{qualityAttributes.selectItems}" />
+                        </ice:selectOneListbox>
+                        <br />Please Evaluate
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="--" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.veryNegativeForce?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORF" value="verynegative" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.negativeForce?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORF" value="negative" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-+" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.neutralForce?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORF" value="neutral" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="+" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.positiveForce?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORF" value="positive" />
+                        </ice:commandLink>
+                        <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="++" actionListener="#{formattingStep.changeQualityAttribute}" styleClass="${formattingStep.veryPositiveForce?'selected':''}">
+                            <f:attribute name="IMPACTINDICATORF" value="verypositive" />
+                        </ice:commandLink>
+
+                        <ice:inputTextarea value="#{f.description}" rows="5"/>
+                        <ice:inputText value="#{f.functionality}" />
+                    </ice:panelGroup>
+                </ice:panelGroup>
+
+            </ice:panelSeries>
+        </div>
+
+        <div id="sidebar">
+
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b>Consequences</b><br />
+                            <br />
+                            <h:outputText value="#{help['pattern.add.common.consequence']}" escape="false" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b>Forces</b><br />
+                            <br />
+                            <h:outputText value="#{help['pattern.add.common.force']}" escape="false" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+
+    </ui:define>
+
+</ui:composition>

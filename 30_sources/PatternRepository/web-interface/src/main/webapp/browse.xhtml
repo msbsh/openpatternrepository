@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="WEB-INF/inc/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:param name="currentBrowse" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{common['page.title.pattern.browse']}
+    </ui:define>
+
+    <ui:define name="page">
+        <ice:form>
+            <div id="content">
+
+                <h2><h:outputText value="#{common['page.title.pattern.browse']}" /></h2>
+
+                <ice:panelGroup>
+                    <ice:tree id="categories"
+                              value="#{browseCtrl.categories}"
+                              var="item"
+                              hideRootNode="false"
+                              hideNavigation="true"
+                              actionListener="#{browseCtrl.expandCategory}"
+                              imageDir="images/"
+                              >
+                        <ice:treeNode>
+                            <f:facet name="icon">
+                                <ice:panelGroup style="display: inline;" styleClass="treefix">
+                                    <ice:graphicImage value="images/#{item.userObject.icon}" rendered="#{!empty item.userObject.pattern}"/>
+                                </ice:panelGroup>
+                            </f:facet>
+                            <f:facet name="content">
+                                <ice:panelGroup style="display: inline" styleClass="treefix">
+                                    <h:outputLink value="wiki/#{item.userObject.pattern.uniqueName}" rendered="#{!empty item.userObject.pattern}">
+                                        #{item.userObject.text}
+                                    </h:outputLink>
+                                    <ice:graphicImage value="images/#{item.userObject.icon}" rendered="#{!empty item.userObject.category}" styleClass="categoryImg"/>
+                                    <h:outputText value="#{item.userObject.text}" rendered="#{!empty item.userObject.category}" />
+                                </ice:panelGroup>
+                            </f:facet>
+                        </ice:treeNode>
+                    </ice:tree>
+                </ice:panelGroup>
+            </div>
+        </ice:form>
+        <ice:form>
+            <div id="sidebar">
+                <h2><h:outputText value="#{common['page.title.pattern.tagCloud']}" /></h2>
+                <ice:panelSeries value="#{tagCloudCtrl.allTags}" var="tag">
+                    <ice:panelGroup style="position:relative;z-index:10;font-weight: bold; display: inline-block;margin: 2px;padding: 2px;">
+
+                        <a href="#" title="Click to select" class="#{tag.styleClass} browseTag">
+                            #{tag.tag.name}
+                        </a>
+                    </ice:panelGroup>
+                </ice:panelSeries>
+                <br />
+
+                <h2><h:outputText value="#{common['page.title.pattern.tagCloud.results']}" rendered="#{tagCloudCtrl.patternsChosen}"/></h2>
+
+                <div id="tagsresults">
+                    <ice:panelSeries value="#{tagCloudCtrl.patternsForTag}" var="p" rendered="#{tagCloudCtrl.patternsChosen}">
+                        <ice:graphicImage value="images/li.png"/>
+                        <a href="wiki/#{p.uniqueName}">#{p.name}</a><br/><br/>
+                    </ice:panelSeries>
+                </div>
+            </div>
+        </ice:form>
+
+    </ui:define>
+
+</ui:composition>

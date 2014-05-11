@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+
+    <div id="content">
+        <h2>Proposed Tags</h2>
+        <ice:panelSeries value="#{addPatternCtrl.step.proposedTags}" var="proposed">
+            <ice:panelGroup style="position:relative;z-index:10; border: 1px solid #48a659; color: #fff; font-weight: bold; background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                <ice:outputText value="#{proposed.name}" />
+                <ice:commandLink value="+" title="Click to add" actionListener="#{addPatternCtrl.step.addProposedTag}" style="color: #48a659; text-decoration: none;">
+                    <f:attribute name="TAG" value="#{proposed}" />
+                </ice:commandLink>
+            </ice:panelGroup>
+        </ice:panelSeries>
+
+        <h2>Own Tags</h2>
+        <ice:selectInputText value="#{addPatternCtrl.step.tag}"
+                             rows="10"
+                             width="300"
+                             valueChangeListener="#{addPatternCtrl.step.tagValueChanged}"
+                             style="display: inline-block;">
+            <f:selectItems value="#{addPatternCtrl.step.tagPossibilities}"/>
+        </ice:selectInputText>&#160;
+        <ice:commandButton value="#{form['button.add']}" actionListener="#{addPatternCtrl.step.addTag}" />
+
+        <br /><br />
+
+        <ice:panelGroup styleClass="tagzone">
+            <ice:panelSeries value="#{addPatternCtrl.step.tags}" var="tag">
+                <ice:panelGroup style="display: inline-block; border: 1px solid #48a659; color: #fff; font-weight: bold; background-color: #82c19c; margin: 4px;padding-left: 2px; padding-right: 2px;">
+                    <ice:outputText value="#{tag.name}" />
+                    <ice:commandLink value="-" title="Click to remove" actionListener="#{addPatternCtrl.step.removeTag}" style="color: #48a659; text-decoration: none;">
+                        <f:attribute name="TAG" value="#{tag}" />
+                    </ice:commandLink>
+                </ice:panelGroup>
+            </ice:panelSeries>
+        </ice:panelGroup>
+
+
+        <hr />
+
+        <h2>Relationships</h2>
+
+        <table>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td><ice:outputLabel for="selectPatternsearch" value="Search" /></td>
+            <td>
+            <opr:selectPattern controller="#{addPatternCtrl.step.selectPattern}"
+                               value="#{addPatternCtrl.step.relatedPattern}" />
+            </td>
+            </tr>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td>Description</td>
+                <td><ice:inputText value="#{addPatternCtrl.step.relationDescription}" /></td>
+            </tr>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td>Type</td>
+                <td>
+            <ice:selectOneListbox value="#{addPatternCtrl.step.relationType}"  size="1">
+                <f:convertNumber integerOnly="true" />
+                <f:selectItem itemValue="0" itemLabel="Alternative" />
+                <f:selectItem itemValue="1" itemLabel="Combination" />
+                <f:selectItem itemValue="2" itemLabel="Variant" />
+            </ice:selectOneListbox>
+            </td>
+            </tr>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td colspan="2" class="right">
+            <ice:commandButton value="#{form['button.add']}" actionListener="#{addPatternCtrl.step.addRelationship}" />
+            </td>
+            </tr>
+        </table>
+
+        <br />
+        <ice:dataTable value="#{addPatternCtrl.step.relations}" var="relation" >
+            <ice:column>
+                    <!-- selectionListener="#{addPatternCtrl.step.rowSelectionListener}" -->
+                <ice:rowSelector immediate="true" />
+                <ice:outputText value="#{relation.patternA.name}" />
+                &lt;-&gt;
+                <ice:outputText value="#{relation.patternB.name}" />
+                <br />
+                <ice:outputText value="#{relation.description}" />
+            </ice:column>
+            <ice:column style="vertical-align: middle;">
+                <ice:commandLink value="" actionListener="#{addPatternCtrl.step.removeRelationship}" immediate="true">
+                    <img alt="#{common['remove']}" src="images/removeSmall.png" />
+                    <f:attribute value="#{relation}" name="RELATIONSHIP" />
+                </ice:commandLink>
+            </ice:column>
+        </ice:dataTable>
+
+
+        <hr />
+
+    </div>
+    <div id="sidebar">
+        <div id="help">
+            <ul class="info">
+                <li>
+                    <div class="header">
+                        <img src="images/info.png" alt="information" />
+                    </div>
+                    <div class="text">
+                        <b><ice:outputText value="#{help['pattern.add.additional.info.headline']}" /></b><br />
+                        <ice:outputText value="#{help['pattern.add.additional.info.content']}" escape="false" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

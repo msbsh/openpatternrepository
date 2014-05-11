@@ -1,0 +1,80 @@
+<ui:composition template="../WEB-INF/inc/wizard.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:opr="http://rug.nl/search/opr/components"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                >
+
+    <ui:define name="pagetitle">
+        Text Processing
+    </ui:define>
+
+    <ui:define name="wizardstep">
+
+        <div id="content">
+            <h1><ice:outputText value="#{addWizardController.pattern.name}" /></h1>
+
+            <ice:panelSeries value="#{addWizardController.patternVersion.template.components}" var="cp">
+                <ice:panelSeries value="#{formattingStep.blocks[cp.identifier]}" var="tb">
+                    <ice:panelGroup styleClass="fanPanel" >
+<!--                                    expanded="#{cp.mandatory}">-->
+
+                        <h2><ice:outputText value="#{cp.name}" />
+                            <small>
+                                <ice:commandLink actionListener="#{formattingStep.changeEditTextBlock}">
+                                    <f:attribute value="#{tb}" name ="textBlock" />
+                                    <ice:outputText value="view" rendered="#{formattingStep.editTextBlock == tb}" />
+                                    <ice:outputText value="edit" rendered="#{formattingStep.editTextBlock != tb}" />
+                                </ice:commandLink>
+                            </small>
+                        </h2>
+                        <ice:inputTextarea value="#{tb.text}"
+                                           rows="10"
+                                           styleClass="wikiSyntax wide"
+                                           partialSubmit="true"
+                                           style="width: 100%;"
+                                           rendered="#{tb == formattingStep.editTextBlock}"/>
+                        <ice:outputText escape="false" value="#{func:wiki2html(tb.text)}"
+                                        rendered="#{tb != formattingStep.editTextBlock}"/>
+                    </ice:panelGroup>
+                </ice:panelSeries>
+            </ice:panelSeries>
+        </div>
+
+
+        <div id="sidebar">
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="#{help['pattern.add.common.formatting']}" escape="false" /></b><br />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="noJs.html" id="showUploadedFilesDialog">Show all available files</a>
+            <ul id="uploadedFilesDialog" title="Uploaded files">
+                <ice:repeat value="#{formattingStep.allUploadedFiles}" var="file">
+                    <li><a href="/file/#{file.id}" target="_blank">#{file.name}</a>
+                    <ice:commandLink value="Add" action="#{formattingStep.addUploadedFile(file.id)}"/>
+                    </li>
+                </ice:repeat>
+            </ul>
+            <opr:fileUpload formId="#{addWizardController.formId}" patternVersion="addWizardController.patternVersion"/>
+            <br />
+            <opr:fileList files="#{addWizardController.patternVersion.files}" bean="#{formattingStep}" removeCallback="removeFile" />
+
+            <br /><br />
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

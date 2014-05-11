@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.icefaces</groupId>
+  <artifactId>icefaces-compat</artifactId>
+  <version>2.0-Beta2-custom</version>
+  <packaging>jar</packaging>
+  <name>ICEfaces Compat Core</name>
+  <url>http://www.icefaces.org</url> 
+  <description>compat are the classic components for ICEfaces-2.0</description> 
+  <dependencies>
+    <dependency>
+      <groupId>org.icefaces</groupId>
+      <artifactId>icefaces</artifactId>
+      <version>2.0-Beta2</version>
+    </dependency>       
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.8.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-digester</groupId>
+      <artifactId>commons-digester</artifactId>
+      <version>1.8</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1</version>
+      <exclusions>
+       <exclusion>
+           <groupId>logkit</groupId>
+           <artifactId>logkit</artifactId>
+       </exclusion>
+       <exclusion>
+           <groupId>avalon-framework</groupId>
+           <artifactId>avalon-framework</artifactId>
+       </exclusion>
+       <exclusion>
+           <artifactId>log4j</artifactId>
+           <groupId>log4j</groupId>
+       </exclusion>
+       <exclusion> 
+ 			<groupId>javax.servlet</groupId> 
+ 			<artifactId>servlet-api</artifactId> 
+		 </exclusion> 
+      </exclusions>
+    </dependency>
+        
+    <dependency>
+      <groupId>javax.el</groupId>
+      <artifactId>el-api</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <!--  next dependencies brought over from A3 comps-compat -->
+    <!--  jstl jar may be required for panelSeries at run time -->
+  <!-- <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.1.2</version>
+    </dependency> -->
+
+    <!-- next lib only required if using dataExporter component
+    <dependency>
+ 	<groupId>net.sourceforge.jexcelapi</groupId>
+ 	<artifactId>jxl</artifactId>
+ 	<version>2.6.8</version>
+    </dependency>  -->
+    <!-- next lib only required if using Krysalis jcharts
+    <dependency>
+ 	<groupId>net.sf.jcharts</groupId>
+ 	<artifactId>krysalis-jCharts</artifactId>
+ 	<version>1.0.0-alpha-1</version>
+    </dependency>  -->
+ 
+  </dependencies>
+</project>

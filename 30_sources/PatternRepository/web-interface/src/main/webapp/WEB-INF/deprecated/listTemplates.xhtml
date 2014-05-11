@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:define name="pagetitle">
+        Success
+    </ui:define>
+
+    <ui:define name="page">
+        <div id="content">
+            <h1>Pattern Templates</h1>
+            <h:dataTable value="#{template.templates}" var="t">
+                <h:column>
+                    <h:outputText value="#{t.name}"/>
+                </h:column>
+            </h:dataTable>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

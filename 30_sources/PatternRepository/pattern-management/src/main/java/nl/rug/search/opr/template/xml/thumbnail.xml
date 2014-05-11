@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template>
+    <mappings>
+        <mapping>
+            <name>Description</name>
+            <description></description>
+            <identifier>description</identifier>
+            <mandatory>1</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+        <mapping>
+            <name>Example/Figure</name>
+            <description></description>
+            <identifier>example</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+    </mappings>
+</template>

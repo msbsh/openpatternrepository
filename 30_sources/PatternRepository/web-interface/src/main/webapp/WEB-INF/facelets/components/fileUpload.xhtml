@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags">
+
+    <ice:inputHidden id="reloadWorkaround"/>
+    <script type="text/javascript">
+        function reloadFiles() {
+            var reloadWorkaround = document.getElementById("#{formId}:reloadWorkaround");
+            var form = document.getElementById("#{formId}");
+            iceSubmitPartial(form,reloadWorkaround,null);
+        }
+    </script>
+    <iframe src="fileFrame.iface?patternVersion=#{patternVersion}" width="100%" height="200px" />
+</ui:composition>

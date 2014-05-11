@@ -1,0 +1,100 @@
+<ui:composition template="../WEB-INF/inc/wizard.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+    <ui:define name="pagetitle">
+        Step4
+    </ui:define>
+
+  <ui:param name="noNextpage" value="true" />
+
+  <ui:define name="wizardstep">
+
+        <div id="content">
+            <h2>Relationships</h2>
+
+            <table>
+
+                <tr><td colspan="2"><hr /></td></tr>
+
+                <tr>
+                    <td><ice:outputLabel for="selectPatternsearch" value="Search" /></td>
+                <td>
+                <opr:inlineSearch bean="#{additionalStep}" callback="select" />
+                </td>
+                </tr>
+
+                <tr><td colspan="2"><hr /></td></tr>
+
+                <opr:addRelationship selectedPattern="#{additionalStep.relatedPattern}" description="#{additionalStep.relationDescription}" relationshipType="#{additionalStep.relationType}" />
+
+                <tr><td colspan="2"><hr /></td></tr>
+
+                <tr>
+                    <td colspan="2" class="right">
+                <ice:commandButton value="#{form['button.add']}" actionListener="#{additionalStep.addRelationship}" />
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br />
+                <opr:relationshipList relationships="#{addWizardController.pattern.relations}" bean="#{additionalStep}" removeCallback="removeRelationship" />
+                </td>
+                </tr>
+            </table>
+            
+            <hr />
+            <h2>Proposed Tags</h2>
+            <ice:panelSeries value="#{additionalStep.proposedTags}" var="proposed">
+                <ice:panelGroup style="position:relative;z-index:10; border: 1px solid #48a659; color: #fff; font-weight: bold; background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                    <ice:outputText value="#{proposed.name}" />
+                    <ice:commandLink value="+" title="Click to add" actionListener="#{additionalStep.addProposedTag}" style="color: #48a659; text-decoration: none;">
+                        <f:attribute name="TAG" value="#{proposed}" />
+                    </ice:commandLink>
+                </ice:panelGroup>
+            </ice:panelSeries>
+
+            <h2>Own Tags</h2>
+            <ice:selectInputText value="#{additionalStep.tag}"
+                                 rows="10"
+                                 width="300"
+                                 valueChangeListener="#{additionalStep.tagValueChanged}"
+                                 style="display: inline-block;">
+                <f:selectItems value="#{additionalStep.tagPossibilities}"/>
+            </ice:selectInputText>&#160;
+            <ice:commandButton value="#{form['button.add']}" actionListener="#{additionalStep.addTag}" />
+
+            <br /><br />
+
+            <ice:panelGroup styleClass="tagzone">
+                <ice:panelSeries value="#{additionalStep.tags}" var="tag">
+                    <ice:panelGroup style="display: inline-block; border: 1px solid #48a659; color: #fff; font-weight: bold; background-color: #82c19c; margin: 4px;padding-left: 2px; padding-right: 2px;">
+                        <ice:outputText value="#{tag.name}" />
+                        <ice:commandLink value="-" title="Click to remove" actionListener="#{additionalStep.removeTag}" style="color: #48a659; text-decoration: none;">
+                            <f:attribute name="TAG" value="#{tag}" />
+                        </ice:commandLink>
+                    </ice:panelGroup>
+                </ice:panelSeries>
+            </ice:panelGroup>
+
+        </div>
+        <div id="sidebar">
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="#{help['pattern.add.additional.info.headline']}" /></b><br />
+                            <ice:outputText value="#{help['pattern.add.additional.info.content']}" escape="false" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

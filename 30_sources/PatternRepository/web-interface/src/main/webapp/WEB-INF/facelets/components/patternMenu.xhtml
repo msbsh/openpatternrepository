@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <!-- Creates the pattern actions menu -->
+
+    <b>#{form['label.patternActions']}</b>
+    <ul id="patternActionNav">
+        <li class="view"><a href="wiki/#{pattern.uniqueName}" >#{form['label.viewPattern']}</a></li>
+        <li class="editPattern"><a href="editCommon.iface?patternId=#{pattern.id}" >#{form['label.editCommonInformation']}</a></li>
+        <li class="editDescription"><a href="editVersion.iface?patternId=#{pattern.id}" >#{form['label.editVersionInformation']}</a></li>
+        <li class="delete">#{form['label.deletePattern']}</li>
+    </ul>
+
+</ui:composition>

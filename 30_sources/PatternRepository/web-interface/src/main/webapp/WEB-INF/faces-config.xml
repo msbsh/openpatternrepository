@@ -1,0 +1,225 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0"
+              metadata-complete="false">
+
+    <application>
+        
+        <message-bundle>nl.rug.search.opr.localization.validation</message-bundle>
+
+        <resource-bundle>
+            <base-name>nl.rug.search.opr.localization.common</base-name>
+            <var>common</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>nl.rug.search.opr.localization.form</base-name>
+            <var>form</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>nl.rug.search.opr.localization.help</base-name>
+            <var>help</var>
+        </resource-bundle>
+
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+
+    </application>
+
+    <lifecycle>
+        <phase-listener>nl.rug.search.opr.ValidationStylePhaseListener</phase-listener>
+    </lifecycle>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>START</from-outcome>
+            <to-view-id>/welcome.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>VIEW</from-outcome>
+            <to-view-id>/view.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>HOME</from-outcome>
+            <to-view-id>/welcome.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>EDIT</from-outcome>
+            <to-view-id>/edit.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>BROWSE</from-outcome>
+            <to-view-id>/browseByCategory.xhtml</to-view-id>
+        </navigation-case>
+  
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/addTemplate.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>SUCCESS</from-outcome>
+            <to-view-id>/addTemplate.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>FAIL</from-outcome>
+            <to-view-id>/addTemplate.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/wizard/basic.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>NEXT</from-outcome>
+            <to-view-id>/wizard/pastebox.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SUBMITTED</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/add.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>NEXT</from-outcome>
+            <to-view-id>/wizard/pastebox.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SUBMITTED</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RESET</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/wizard/pastebox.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{not empty addWizardController.paste}</if>
+            <from-outcome>NEXT</from-outcome>
+            <to-view-id>/wizard/matching.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>NEXT</from-outcome>
+            <to-view-id>/wizard/formatting.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PREVIOUS</from-outcome>
+            <to-view-id>/wizard/basic.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SUBMITTED</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RESET</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/wizard/matching.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>NEXT</from-outcome>
+            <to-view-id>/wizard/formatting.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PREVIOUS</from-outcome>
+            <to-view-id>/wizard/pastebox.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SUBMITTED</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RESET</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/wizard/formatting.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>NEXT</from-outcome>
+            <to-view-id>/wizard/forcesandconsequences.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <if>#{not empty addWizardController.paste}</if>
+            <from-outcome>PREVIOUS</from-outcome>
+            <to-view-id>/wizard/matching.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PREVIOUS</from-outcome>
+            <to-view-id>/wizard/pastebox.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SUBMITTED</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RESET</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+
+        <navigation-rule>
+        <from-view-id>/wizard/forcesandconsequences.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>NEXT</from-outcome>
+            <to-view-id>/wizard/relationships.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PREVIOUS</from-outcome>
+            <to-view-id>/wizard/formatting.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SUBMITTED</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RESET</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/wizard/relationships.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>PREVIOUS</from-outcome>
+            <to-view-id>/wizard/forcesandconsequences.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SUBMITTED</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RESET</from-outcome>
+            <to-view-id>/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>
+
+
+
+
+
+
+
+
+
+
+

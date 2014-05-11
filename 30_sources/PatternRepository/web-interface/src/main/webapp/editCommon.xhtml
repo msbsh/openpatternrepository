@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="WEB-INF/inc/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+    <ui:param name="currentBrowse" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{common['page.pattern.edit.title']}
+    </ui:define>
+
+    <ui:define name="page">
+
+        <ice:form partialSubmit="true" id="#{editCommonCtrl.formId}">
+
+            <div id="result">
+                <ice:message for="#{editCommonCtrl.formId}" errorClass="fail" infoClass="success" effect="#{editCommonCtrl.resultEffect}" visible="false"/>
+            </div>
+
+            <ice:panelGroup rendered="#{empty editCommonCtrl.pattern}" >
+                <h1><ice:outputText value="#{help['hint.pattern.view.noPattern.title']}" escape="false" /></h1>
+                <ice:outputText value="#{help['hint.pattern.view.noPattern.content']}" escape="false" />
+            </ice:panelGroup>
+
+
+            <ice:panelGroup rendered="#{!empty editCommonCtrl.pattern}" id="editPattern">
+
+                <div class="right">
+                    <ice:commandButton action="#{editCommonCtrl.submitForm}"
+                                       value="#{form['button.submit']}"
+                                       tabindex="98"
+                                       styleClass="confirm"
+                                       id="submit"
+                                       />
+                    &#160;
+                </div>
+
+                <div id="content">
+
+                    <h1>#{editCommonCtrl.pattern.name}</h1>
+                    <h2>#{common['page.pattern.editCommon']}</h2>
+
+                    <table>
+                        <tr>
+                            <td >
+                        <ice:outputLabel for="name" value="#{form['label.name']}">
+                            <ice:outputText value="#{form['constraint.required']}" styleClass="required" />
+                        </ice:outputLabel>
+                        </td>
+                        <td>
+                        <ice:inputText label="#{form['label.name']}" value="#{editCommonCtrl.pattern.name}" id="name" tabindex="1" required="true" partialSubmit="true">
+                            <f:validateLength maximum="255" />
+                            <f:validator validatorId="RegexValidator" />
+                            <f:attribute name="inputCharset" value="A-Za-z0-9-: " />
+                        </ice:inputText>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <small>
+                                    <ice:outputText value=" #{form['constraint.maxlength']}" nospan="true" /> 255,
+                                    <ice:outputText value=" #{form['constraint.inputCharset']}" nospan="true" /> [a-z0-9-: ]
+                                </small>
+                            </td>
+                        </tr>
+
+                        <tr><td colspan="2"><hr /></td></tr>
+
+                        <tr>
+                            <td>
+                        <ice:outputLabel for="uniqueName" value="#{form['label.uniqueName']}">
+                            <ice:outputText value="#{form['constraint.required']}" styleClass="required" />
+                        </ice:outputLabel>
+                        </td>
+                        <td>
+                        <ice:inputText label="#{form['label.uniqueName']}"
+                                       value="#{editCommonCtrl.pattern.uniqueName}"
+                                       id="uniqueName"
+                                       tabindex="1"
+                                       required="true"
+                                       validator="#{editCommonCtrl.validateUniqueName}"
+                                       partialSubmit="true">
+                            <f:validateLength maximum="255" />
+                            <f:validator validatorId="RegexValidator" />
+                            <f:attribute name="inputCharset" value="A-Za-z0-9_()" />
+                        </ice:inputText>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <small>
+                                    <ice:outputText value=" #{form['constraint.unique']}" nospan="true" />,
+                                    <ice:outputText value=" #{form['constraint.maxlength']}" nospan="true" /> 255,
+                                    <ice:outputText value=" #{form['constraint.inputCharset']}" nospan="true" /> [a-z0-9_()]
+                                </small>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h2>Categories</h2>
+                    <table>
+
+                        <tr>
+                            <td><ice:outputLabel for="category" value="#{form['label.categories']}"/></td>
+                        <td>
+                        <ice:selectOneListbox label="#{form['label.category']}"
+                                              converter="categoryConverter"
+                                              partialSubmit="true"
+                                              size="1"
+                                              valueChangeListener="#{editCommonCtrl.addCategory}">
+                            <f:selectItem itemValue="" itemLabel="#{form['selectBox.pleaseSelect']}" />
+                            <f:selectItems value="#{category.categorySelectItems}" />
+                        </ice:selectOneListbox>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><br />
+                                <opr:categoryList categories="#{editCommonCtrl.pattern.categories}" bean="#{editCommonCtrl}" removeCallback="removeCategory" />
+                        </td>
+                        </tr>
+                        <tr><td colspan="2"><hr /></td></tr>
+                    </table>
+
+                    <h2>Relationships</h2>
+
+                    <table>
+
+                        <tr><td colspan="2"><hr /></td></tr>
+
+                        <tr>
+                            <td><ice:outputLabel for="selectPatternsearch" value="Search" /></td>
+                        <td>
+                        <opr:inlineSearch bean="#{editCommonCtrl}" callback="select" />
+                        </td>
+                        </tr>
+
+                        <tr><td colspan="2"><hr /></td></tr>
+
+                        <opr:addRelationship selectedPattern="#{editCommonCtrl.relatedPattern}" description="#{editCommonCtrl.relationDescription}" relationshipType="#{editCommonCtrl.relationType}" />
+
+                        <tr><td colspan="2"><hr /></td></tr>
+
+                        <tr>
+                            <td colspan="2" class="right">
+                        <ice:commandButton value="#{form['button.add']}" actionListener="#{editCommonCtrl.addRelationship}" id="addRelationship" />
+                        </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><br />
+                            <opr:relationshipList relationships="#{editCommonCtrl.pattern.relations}" bean="#{editCommonCtrl}" removeCallback="removeRelationship" />
+                            </td>
+                        </tr>
+                        <tr><td colspan="2"><hr /></td></tr>
+                    </table>
+
+                    <h2>Proposed Tags</h2>
+                    <ice:panelSeries value="#{editCommonCtrl.proposedTags}" var="proposed">
+                        <ice:panelGroup style="position:relative;z-index:10; border: 1px solid #48a659; color: #fff; font-weight: bold; background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                            <ice:outputText value="#{proposed.name}" />
+                            <ice:commandLink value="+" title="Click to add" actionListener="#{editCommonCtrl.addProposedTag}" style="color: #48a659; text-decoration: none;">
+                                <f:attribute name="TAG" value="#{proposed}" />
+                            </ice:commandLink>
+                        </ice:panelGroup>
+                    </ice:panelSeries>
+                    <h2>Tags</h2>
+
+                        <ice:selectInputText value="#{editCommonCtrl.tag}"
+                                             rows="10"
+                                             width="300"
+                                             valueChangeListener="#{editCommonCtrl.tagValueChanged}"
+                                             style="display: inline-block;">
+                            <f:selectItems value="#{editCommonCtrl.tagPossibilities}"/>
+                        </ice:selectInputText>&#160;
+                        <ice:commandButton value="#{form['button.add']}" actionListener="#{editCommonCtrl.addTag}" id="addTag"/>
+                        
+                        <br /><br />
+
+                        <ice:panelGroup styleClass="tagzone">
+                            <ice:panelSeries value="#{editCommonCtrl.pattern.tags}" var="tag">
+                                <ice:panelGroup style="display: inline-block; border: 1px solid #48a659; color: #fff; font-weight: bold; background-color: #82c19c; margin: 4px;padding-left: 2px; padding-right: 2px;">
+                                    <ice:outputText value="#{tag.name}" />
+                                    <ice:commandLink value="-" title="Click to remove" actionListener="#{editCommonCtrl.removeTag}" style="color: #48a659; text-decoration: none;">
+                                        <f:attribute name="TAG" value="#{tag}" />
+                                    </ice:commandLink>
+                                </ice:panelGroup>
+                            </ice:panelSeries>
+                        </ice:panelGroup>
+
+
+                </div>
+                <div id="sidebar">
+                    <div id="help">
+                        <ul class="info">
+                            <li class="messages">
+                                <div class="header"></div>
+                                <div class="text">
+                                    <ice:messages layout="list" errorClass="error" warnClass="warning" fatalClass="fatal" infoClass="information" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="header">
+                                    <img src="images/info.png" alt="#{form['label.patternInformation']}" />
+                                </div>
+                                <div class="text">
+                                    <opr:patternMenu pattern="#{editCommonCtrl.pattern}" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b>#{help['pattern.editCommon.common.info.headline']}</b><br />
+                                    <ice:outputText value="#{help['pattern.editCommon.common.info.content']}" escape="false" />
+                                </div>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b>#{help['pattern.editCommon.common.categories']}</b><br />
+                                    <ice:outputText value="#{help['pattern.editCommon.common.categories.content']}" escape="false" />
+                                </div>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b>#{help['pattern.editcommon.common.relationships']}</b><br />
+                                    <ice:outputText value="#{help['pattern.editcommon.common.relation.content']}" escape="false" />
+                                </div>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b>#{help['pattern.editcommon.common.tags']}</b><br />
+                                    <ice:outputText value="#{help['pattern.editcommon.common.tags.content']}" escape="false" />
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </ice:panelGroup>
+        </ice:form>
+    </ui:define>
+</ui:composition>

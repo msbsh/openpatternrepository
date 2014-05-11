@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{common['page.search.title']}
+    </ui:define>
+
+    <ui:define name="page">
+        <div id="content">
+
+            <h1><h:outputText value="#{common['page.search.headline']}" /></h1>
+            <ice:form>
+                Search for patterns that ...<br />
+                <ice:panelSeries value="#{searchCtrl.sentences}" var="sentence"  styleClass="extendedSearch">
+
+                    <ice:panelGroup style="border: 1px solid #48a659; color: #fff; background-color: #82c19c; margin: 4px;padding-left: 2px; padding-right: 2px;">
+                        &#160;
+                        <ice:commandLink value="x" actionListener="#{searchCtrl.removeSentence}" style="font-weight: bold;color: #48a659; text-decoration: none;">
+                            <f:attribute value="#{sentence}" name="sentence" />
+                        </ice:commandLink>
+                        <ice:selectOneListbox size="1" style="width:100px;" value="#{sentence.qualifier}" converter="qualifierConverter">
+                            <f:selectItem itemValue="HAVE" itemLabel="have"/>
+                            <f:selectItem itemValue="DONOTHAVE" itemLabel="do not have"  selected="selected" />
+                            <f:selectItem itemValue="MAYHAVE" itemLabel="may have" />
+                        </ice:selectOneListbox>
+
+                        <ice:panelGroup rendered="#{sentence.class.simpleName=='ImpactSentence'}" style="display: inline;">
+                            a&#160;
+                            <ice:selectOneListbox size="1" style="width:125px;" value="#{sentence.indicator}" converter="indicatorConverter">
+                                <f:selectItem itemValue="verypositive" itemLabel="very positive" />
+                                <f:selectItem itemValue="positive" itemLabel="positive" />
+                                <f:selectItem itemValue="neutral" itemLabel="neutral" />
+                                <f:selectItem itemValue="negative" itemLabel="negative" />
+                                <f:selectItem itemValue="verynegative" itemLabel="very negative" />
+                            </ice:selectOneListbox>
+                            impact on&#160;
+                            <ice:inputText style="width:200px;display:inline-block;" value="#{sentence.qualityAttribute}" />
+                        </ice:panelGroup>
+
+
+                        <ice:panelGroup rendered="#{sentence.class.simpleName=='KeywordSentence'}" style="display: inline;">
+                            the keyword &#160;
+                            <ice:inputText style="width:150px;display:inline-block;" value="#{sentence.keyword}" />
+                            in  &#160;
+                            <ice:selectOneListbox size="1" style="width:125px;" value="#{sentence.searchArea}">
+                                <f:selectItem itemValue="context" itemLabel="context" />
+                                <f:selectItem itemValue="problem" itemLabel="problem" />
+                                <f:selectItem itemValue="solution" itemLabel="solution" />
+                                <f:selectItem itemValue="description" itemLabel="description" />
+                                <f:selectItem itemValue="name" itemLabel="name" />
+                            </ice:selectOneListbox>
+                        </ice:panelGroup>
+
+                        <!--<ice:panelGroup rendered="#{sentence.class.simpleName=='RelationSentence'}" style="display: inline;">
+                            a relation with &#160;
+                            <opr:selectPattern controller="#{searchCtrl.selectPattern}" value="#{sentence.pattern}" />
+                            of the type  &#160;
+                            <ice:selectOneListbox size="1" style="width:100px;" value="#{sentence.type}">
+                                <f:selectItem itemValue="context" itemLabel="Combination" />
+                                <f:selectItem itemValue="problem" itemLabel="Alternative" />
+                                <f:selectItem itemValue="solution" itemLabel="Variant" />
+                                <f:selectItem itemValue="description" itemLabel="Unspecified" />
+                            </ice:selectOneListbox>
+                        </ice:panelGroup>-->
+
+                        <ice:panelGroup rendered="#{sentence.class.simpleName=='CategorySentence'}" style="display: inline;">
+                            the category &#160;
+                            <ice:selectOneListbox
+                                  converter="categoryConverter"
+                                  value="#{sentence.category}"
+                                  partialSubmit="true"
+                                  style="width: 200px;"
+                                  size="1">
+                                <f:selectItem itemValue="" itemLabel="#{form['selectBox.pleaseSelect']}" />
+                                <f:selectItems value="#{category.categorySelectItems}" />
+                            </ice:selectOneListbox>
+                        </ice:panelGroup>
+
+                    </ice:panelGroup>
+
+                </ice:panelSeries>
+
+                <ice:panelGroup >
+                    <br />
+                    <ice:commandButton actionListener="#{searchCtrl.showPopup}" value="+" />
+                
+
+                <ice:panelPopup id="selectSentence"
+                                visible="#{searchCtrl.menuVisible}"
+                                autoPosition="manual"
+                                autoCentre="false"
+                                style="position: absolute;text-align:left;background-color: #5e5e5e;width:123px;border:1px solid #000;">
+                    <f:facet name="body">
+                        <ice:panelGroup styleClass="center" style="font-size: 12px;width:121px;">
+
+                            <ice:commandLink value="Quality Attribute"
+                                             actionListener="#{searchCtrl.addSentence}"
+                                             style="color: #fff;">
+                                <f:attribute name="sentencetype" value="impact" />
+                            </ice:commandLink>
+                            <br />
+                            <hr />
+
+                            <ice:commandLink value="Keyword" 
+                                             actionListener="#{searchCtrl.addSentence}"
+                                             style="color: #fff;">
+                                <f:attribute name="sentencetype" value="keyword" />
+                            </ice:commandLink>
+                            <br />
+                            <hr />
+
+                            <ice:commandLink value="Category" 
+                                             actionListener="#{searchCtrl.addSentence}"
+                                             style="color: #fff;">
+                                <f:attribute name="sentencetype" value="category" />
+                            </ice:commandLink>
+                            <br />
+                            <hr />
+                            <!--<ice:commandLink value="relationship" actionListener="#{searchCtrl.addSentence}">
+                                <f:attribute name="sentencetype" value="relation" />
+                            </ice:commandLink><br />
+                            <hr />-->
+                        </ice:panelGroup>
+                    </f:facet>
+                </ice:panelPopup>
+
+                <div  style="float:right;">
+                    <h:commandButton  actionListener="#{searchCtrl.searchExtended}" value="#{form['button.search']}" /><br />
+                </div>
+                 </ice:panelGroup>
+            </ice:form>
+
+
+
+            <div id="searchresults">
+
+                <ice:portlet rendered="#{searchCtrl.results!=null}" styleClass="right">
+                    Results #{searchCtrl.start} - #{searchCtrl.num} of #{searchCtrl.max} for <h:outputText value=" #{searchCtrl.fulltext}" /> (<h:outputText value="in #{searchCtrl.benchmark}" /> seconds)
+                </ice:portlet>
+
+                <ice:panelSeries value="#{searchCtrl.results}" var="result">
+
+                    <ice:panelGroup styleClass="item">
+                        <h2><a href="wiki/#{result.uniquename}"><h:outputText value="#{result.name}" /></a></h2>
+                        <ice:panelSeries value="#{result.highlighted}" var="highlight">
+                            <ice:outputText value="#{highlight}" escape="false"/><br />
+                        </ice:panelSeries>
+                        <a href="wiki/#{result.uniquename}">/wiki/#{result.uniquename}</a>
+                    </ice:panelGroup>
+                </ice:panelSeries>
+
+                <ice:portlet rendered="#{searchCtrl.results!=null}" styleClass="right navigation" style="margin-top: 10px;">
+                    <ice:form>
+                        <div class="link">
+                            <ice:commandLink value="&#171;" actionListener="#{searchCtrl.prev}" />
+                        </div>
+                        <ice:panelSeries value="#{searchCtrl.pages}" var="page" style="display:inline-block;">
+                            <div class="link">
+                                <ice:commandLink value="#{page}" actionListener="#{searchCtrl.page}">
+                                    <f:attribute value="#{page}" name="page" />
+                                </ice:commandLink>
+                            </div>
+                        </ice:panelSeries>
+                        <div class="link">
+                            <ice:commandLink value="&#187;" actionListener="#{searchCtrl.next}" />
+                        </div>
+                    </ice:form>
+                </ice:portlet>
+            </div>
+
+        </div>
+
+        <div id="sidebar">
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="#{help['extendedSearch.info.headline']}" /></b><br />
+                            <ice:outputText value="#{help['extendedSearch.info.general']}" escape="false" />
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

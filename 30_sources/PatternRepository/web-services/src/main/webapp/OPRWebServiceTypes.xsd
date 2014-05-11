@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="pattern" type="patternDTO"/>
+
+  <xs:element name="resultList" type="resultList"/>
+
+  <xs:complexType name="resultList">
+    <xs:complexContent>
+      <xs:extension base="arrayList">
+        <xs:sequence>
+          <xs:element name="count" type="xs:int"/>
+          <xs:element name="limit" type="xs:int"/>
+          <xs:element name="offset" type="xs:int"/>
+          <xs:element name="result" type="result" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="time" type="xs:long"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="arrayList">
+    <xs:complexContent>
+      <xs:extension base="abstractList">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="abstractList" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="abstractCollection">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="abstractCollection" abstract="true">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="result">
+    <xs:sequence>
+      <xs:element name="highlighted" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="score" type="xs:float"/>
+      <xs:element name="uniquename" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="patternDTO">
+    <xs:sequence>
+      <xs:element name="author" type="xs:string" minOccurs="0"/>
+      <xs:element name="category" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="consequence" type="consequence" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="content" type="content" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="documentedWhen" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="file" type="fileDTO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="force" type="force" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+      <xs:element name="license" type="license" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="relationship" type="relationshipDTO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="source" type="xs:string" minOccurs="0"/>
+      <xs:element name="tag" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="template" type="xs:string" minOccurs="0"/>
+      <xs:element name="versionId" type="xs:long" minOccurs="0"/>
+      <xs:element name="wikiName" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="consequence">
+    <xs:complexContent>
+      <xs:extension base="driver">
+        <xs:sequence>
+          <xs:element name="description" type="xs:string" minOccurs="0"/>
+          <xs:element name="impactIndication" type="indicator" minOccurs="0"/>
+          <xs:element name="qualityAttribute" type="qualityAttribute" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="driver" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="ambiguousEntity">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ambiguousEntity" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="baseEntity">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="baseEntity" abstract="true">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="qualityAttribute">
+    <xs:complexContent>
+      <xs:extension base="baseEntity">
+        <xs:sequence>
+          <xs:element name="description" type="xs:string" minOccurs="0"/>
+          <xs:element name="name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="content">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="sort" type="xs:int"/>
+      <xs:element name="text" type="xs:string" minOccurs="0"/>
+      <xs:element name="type" type="type" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="fileDTO">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+      <xs:element name="license" type="license" minOccurs="0"/>
+      <xs:element name="mime" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="license">
+    <xs:complexContent>
+      <xs:extension base="baseEntity">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" minOccurs="0"/>
+          <xs:element name="restrictive" type="xs:boolean"/>
+          <xs:element name="licenseSource" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="force">
+    <xs:complexContent>
+      <xs:extension base="driver">
+        <xs:sequence>
+          <xs:element name="description" type="xs:string" minOccurs="0"/>
+          <xs:element name="functionality" type="xs:string" minOccurs="0"/>
+          <xs:element name="impactIndication" type="indicator" minOccurs="0"/>
+          <xs:element name="qualityAttribute" type="qualityAttribute" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="relationshipDTO">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="type" type="relationType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="indicator">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="verynegative"/>
+      <xs:enumeration value="negative"/>
+      <xs:enumeration value="neutral"/>
+      <xs:enumeration value="positive"/>
+      <xs:enumeration value="verypositive"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PROBLEM"/>
+      <xs:enumeration value="CONTEXT"/>
+      <xs:enumeration value="SOLUTION"/>
+      <xs:enumeration value="DESCRIPTION"/>
+      <xs:enumeration value="FORCES"/>
+      <xs:enumeration value="CONSEQUENCES"/>
+      <xs:enumeration value="RELATIONSHIP"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="relationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ALTERNATIVE"/>
+      <xs:enumeration value="VARIANT"/>
+      <xs:enumeration value="COMBINATION"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

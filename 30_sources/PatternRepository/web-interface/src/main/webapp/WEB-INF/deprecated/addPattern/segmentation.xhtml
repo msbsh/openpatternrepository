@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags">
+
+    <script type="text/javascript" src="lib/sendselection.js"></script>
+
+
+    <div id="content">
+        <div style="padding: 10px;">
+            <ice:outputText value="#{addPatternCtrl.copypaste}" escape="false" nospan="true" partialSubmit="true"/>
+        </div>
+    </div>
+    <ice:inputHidden value="#{addPatternCtrl.step.selection}" id="selection" />
+    <ice:panelPopup id="draggablePnlPop"
+                    draggable="#{addPatternCtrl.step.popup.draggable}"
+                    modal="false"
+                    rendered="#{addPatternCtrl.step.popup.rendered}"
+                    visible="#{addPatternCtrl.step.popup.rendered}"
+                    autoCentre="#{addPatternCtrl.step.popup.autoCenterd}"
+                    style="position:absolute;z-index: 99; background-color: lightgray;border: 2px solid #48a659;">
+        <f:facet name="header">
+            <ice:panelGroup styleClass="popupHeaderWrapper" style="background-color: gray; margin-bottom: 10px; color: white;font: 10px/1.5em erdama, sans-serif; padding: 2px;width: 100%;">
+                <ice:outputText
+                    value="#{addPatternCtrl.step.popup.name} #{addPatternCtrl.step.popup.title}"
+                    styleClass="popupHeaderText"/>
+            </ice:panelGroup>
+        </f:facet>
+        <f:facet name="body">
+            
+            <ice:panelGroup styleClass="popupBody center" style="text-align: center;">
+                <ice:panelSeries value="#{addPatternCtrl.step.template.textComponents}" var="components">
+                    <ice:commandButton value="#{components.name}" actionListener="#{addPatternCtrl.step.moveTo}" style="margin-bottom: 2px; margin-left: 10px;margin-right: 10px;">
+                        <f:attribute name="identifier" value="#{components.identifier}" />
+                    </ice:commandButton><br />
+                </ice:panelSeries>
+                <hr />
+                <ice:commandButton value="#{addPatternCtrl.step.template.forces.name}" style="margin-bottom: 2px;" actionListener="#{addPatternCtrl.step.addForce}" rendered="#{addPatternCtrl.step.template.forces!=null}" /> <br />
+                <ice:commandButton value="#{addPatternCtrl.step.template.consequenceList.name}" style="margin-bottom: 2px;" actionListener="#{addPatternCtrl.step.addConsequence}" rendered="#{addPatternCtrl.step.template.consequenceList!=null}" /> <br />
+                <hr />
+                
+                <ice:commandButton value="undo"
+                                   style="margin-bottom: 2px;"
+                                   actionListener="#{addPatternCtrl.step.undo}" /><br />
+                <br />
+            </ice:panelGroup>
+            
+        </f:facet>
+    </ice:panelPopup>
+
+    <div id="sidebar">
+        <h1><ice:outputText value="#{addPatternCtrl.pattern.name}" /></h1>
+        <ice:panelSeries value="#{addPatternCtrl.step.template.textComponents}" var="components" style="font-size: 0.875em;margin-right: 2em;line-height: 1.5em;">
+            <ice:panelSeries value="#{addPatternCtrl.step.blocks[components.identifier]}" var="block">
+            <ice:portlet style="margin-bottom: 20px;">
+                <h2>
+                    <ice:outputText value="#{components.name}" nospan="true" />
+                </h2>
+                <ice:outputText value="#{func:wiki2html(block.text)}" nospan="true" escape="false" />
+            </ice:portlet>
+            </ice:panelSeries>
+        </ice:panelSeries>
+
+                <ice:portlet style="margin-bottom: 20px;" rendered="#{addPatternCtrl.step.template.forces!=null}">
+                    <h2><b><ice:outputText value="#{addPatternCtrl.step.template.forces.name}" nospan="true" /></b></h2>
+                <ice:panelSeries value="#{addPatternCtrl.step.forces}" var="force" style="font-size: 0.875em;margin-right: 2em;line-height: 1.5em;">
+                    <ul>
+                        <li>
+                        <ice:outputText value="#{force.description}" escape="false" />
+                        </li>
+                    </ul>
+                </ice:panelSeries>
+        </ice:portlet>
+                <ice:portlet style="margin-bottom: 20px;" rendered="#{addPatternCtrl.step.template.consequenceList!=null}">
+                <h2><b><ice:outputText value="#{addPatternCtrl.step.template.consequenceList.name}" nospan="true" /></b></h2>
+                <ice:panelSeries value="#{addPatternCtrl.step.consequences}" var="consequence" style="font-size: 0.875em;margin-right: 2em;line-height: 1.5em;">
+                    <ul>
+                        <li>
+                        <ice:outputText value="#{consequence.description}" escape="false" />
+                        </li>
+                    </ul>
+                </ice:panelSeries>
+        </ice:portlet>
+    </div>
+
+</ui:composition>

@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="WEB-INF/inc/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:param name="currentLearnMore" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        Learn more
+    </ui:define>
+
+    <ui:define name="page">
+        <div id="content">
+            <h1><h:outputText value="#{common['learnMore.title']}" /></h1>
+            <h2>Who and why?</h2>
+            <p>The Open Pattern Repository (OPR) project was initiated as part of the doctoral research by Uwe van Heesch,
+               supervised by Paris Avgeriou. It is a joint-venture project of the research group Software Engineering and
+               Architecture (SEARCH), which is part of the Department of Mathematics and Computing Science at the
+               University of Groningen/NL and the Software Engineering study programme at the Fontys University of Applied
+               Sciences in Venlo/NL.</p>
+            <p>The project is inspired and supported by the pattern community, specifically by the participants of
+                a BOF session during EuroPLoP 2009.</p>
+            <h2>Goals</h2>
+            <p>The goal of the OPR project is to create a publicly available and freely usable online repository for
+               software engineering patterns with a focus on architectural- and design patterns. Additional
+               to patterns, the repository can be used to capture information about software technologies like frameworks,
+               middlewares and APIs. In the context of the OPR, those technologies are also seen as patterns with a problem
+               description, a solution and a context in which they can be used. That way technologies can be related with
+               patterns and with each other. A strong emphasis is put on capturing architectural- and design patterns, their
+               known variants, their consequences and especially their various interrelationships. </p>
+
+            <p>The pattern repository is a web application providing functionality to add, change and remove patterns,
+               to browse patterns according to categories or tags and to find patterns that match certain criteria. Additionally, a
+               part of the specified functionality will be provided as REST-webservices, so they can be used in third party
+               applications.</p>
+            <h2>Tutorials</h2>
+            <p>So far, not many tutorials exist. We would like to encourage everybody to create videos of usage scenarios and
+               send us a link so we can publish it.</p>
+            <br/>
+            <ul>
+                <li><a href="http://code.google.com/p/openpatternrepository/wiki/LearnMore">Google code project homepage</a></li>
+            </ul>
+        </div>
+        <div id="sidebar">
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="Fontys University of Applied Sciences, Venlo" /></b><br />
+                            <a href="http://www.fontys.nl/campusvenlo" target="_blank"><img src="images/fontys-logo.png" border="1" alt="Logo Fontys University" /></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="University of Groningen" /></b><br />
+                            <a href="http://www.cs.rug.nl/search/" target="_blank"><img src="images/rug-logo.png" border="1" alt="Logo University of Groningen" /></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="Credits" /></b><br />
+                            <ice:outputText value="The following students of both universities have contributed to the OPR so far:" />
+                            <ul>
+                                <li>Christian Manteuffel (cm at notagain.de)</li>
+                                <li>Martin Verspai (martin at verspai.de)</li>
+                                <li>Michel de Jong (michel at hostname.nl)</li>
+                                <li>Daniel Chiaradia (d.chiaradia at student.fontys.nl)</li>
+                                <li>Sebastian Heineke (s.heinecke at student.fontys.nl)</li>
+                                <li>Georg Fleischer (fleischer.georg at googlemail.com)</li>
+                                <li>Jan Nikolai Trzeszkowski (info at j-n-t.de)</li>
+                                <li>Lydia Wall (lydia.wall at web.de)</li>
+                                <li>Ben Ripkens (bripkens.dev at gmail.com)</li>
+                                <li>Stefan Arians (stefan.arians at gmail.com)</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

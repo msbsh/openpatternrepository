@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template>
+    <mappings>
+        <mapping>
+            <name>Description</name>
+            <description></description>
+            <identifier>description</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Context</name>
+            <description></description>
+            <identifier>context</identifier>
+            <mandatory>0</mandatory>
+            <type>CONTEXT</type>
+        </mapping>
+
+        <mapping>
+            <name>Problem</name>
+            <description></description>
+           <identifier>problem</identifier>
+            <mandatory>0</mandatory>
+            <type>PROBLEM</type>
+        </mapping>
+
+        <mapping>
+            <name>Solution</name>
+            <description></description>
+            <identifier>solution</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+
+
+        <mapping>
+            <name>Relationship</name>
+            <description></description>
+            <identifier>relationship</identifier>
+            <type>RELATIONSHIP</type>
+        </mapping>
+
+        <mapping>
+            <name>Consequences</name>
+            <description></description>
+            <identifier>consequences</identifier>
+            <type>CONSEQUENCES</type>
+        </mapping>
+
+        <mapping>
+            <name>Forces</name>
+            <description></description>
+            <identifier>forces</identifier>
+            <type>FORCES</type>
+        </mapping>
+
+    </mappings>
+</template>

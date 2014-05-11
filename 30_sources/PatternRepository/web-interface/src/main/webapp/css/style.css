@@ -1,0 +1,438 @@
+/* ----------------CSS RESET---------------------- */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+    background-repeat: no-repeat;
+}
+:focus {
+    outline: 0;
+}
+body {
+    line-height: 1;
+    color: black;
+    background: white;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: "";
+}
+blockquote, q {
+    quotes: "" "";
+}
+/* ------------------------------------------------------------------- */
+
+body {
+    font-size: 16px;
+}
+
+#header {
+    background-image: url(../images/header.png);
+    background-repeat: repeat-x;
+    height:  84px;
+    margin-bottom: 1px;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.hseperator {
+    position: relative;
+    top: 82px;
+    height: 2px;
+    background-color: #48a659;
+}
+
+ul#shortlinks {
+    float:left;
+    height: 22px;
+    position: relative;
+    top: 55px;
+    margin-left: 0.5em;
+}
+
+ul#shortlinks li{
+    background-image: url(../images/shortlink.png);
+    margin-bottom: 5px;
+    color: white;
+    display: inline-block;
+}
+
+ul#shotlinks li > img{
+    width: 22px;
+    height: 22px;
+}
+
+div#logo {
+    float: right;
+}
+
+div#logo img {
+    width:  78px;
+    height: 56px;
+    margin: 15px;
+}
+
+div#navigation{
+    background-image: url(../images/nav_shadow_right.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: right top;
+    height: 44px;
+    float: left;
+    position: relative;
+    bottom: 0;
+    top: 44px;
+}
+
+div#navigation li.current > a {
+    text-decoration: none;
+    color: #009024;
+}
+
+div#navigation > div {
+    height: 100%;
+    background-image: url(../images/nav_shadow_left.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: left top;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    margin-right: 26px;
+    margin-left: 26px;
+    padding-left: 26px;
+}
+
+div#navigation > div form {
+    height: 100%;
+}
+
+div#navigation > div  ul {
+    background-image: url(../images/nav_shadow.png);
+    background-repeat: repeat-x;
+    height: 100%;
+}
+#navigation li {
+    display: inline-block;
+    padding-top: 16px;
+    height: 100%;
+    margin: 0;
+}
+
+#navigation a {
+    margin: 0 7px 0 7px;
+    color: #414141;
+    text-decoration: none;
+    font-family: Arial, Geneva, Verdana, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#navigation a:active {
+    color: #009024;
+    text-decoration: none;
+}
+
+#navigation a:hover {
+    color: #009024;
+    text-decoration: underline;
+}
+/* --- END HEADER --- */
+
+#page {
+    width: 100%;
+    position: relative;
+}
+
+#content {
+    margin-top: 14px;
+    margin-left: 32px;
+    width: 602px;
+    float: left;
+    font-size: 14px;
+    line-height: 1.5em;
+    border-right: 1px solid #48a659;
+    padding-right: 42px;
+    padding-bottom: 28px;
+}
+
+
+#toc {
+    float: right;
+    border: 1px solid #4c4c4c;
+    background-color: #ececec;
+    margin-left: 24px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    line-height: 1.3em;
+    width: 156px;
+    text-align: center;
+    padding: 2px;
+}
+
+#toc .title {
+    font-weight: bold;
+}
+
+#toc .hideArrow {
+    float: right;
+    background-image: url(../images/hideArrow.png);
+    width: 13px;
+    height: 13px;
+    margin-top: 2px;
+    margin-right: 6px;
+}
+
+#toc  ul {
+    text-align: left;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+#toc  li {
+    color: #48a659;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+#sidebar {
+    font-family: "Verdana", sans-serif;
+    margin-left: 712px;
+    margin-top: 14px;
+    padding-top: 14px;
+}
+
+#sidebar > div {
+    font-size: 14px;
+}
+
+#footer{
+    clear: both;
+    font-size: 14px;
+    color:gray;
+    height: 30px;
+    vertical-align: middle;
+    padding-top: 30px;
+    margin: 0;
+    text-align: center;
+}
+
+div#help {
+    font-size: 16px;
+}
+
+#help li, #help ul {
+    list-style-type: none;
+    list-style: none;
+}
+
+#help  ul {
+    list-style: none;
+}
+
+#help  ul.info {
+    background: transparent url(../images/boxbg.png) repeat-y;
+}
+
+#help  ul > li > div.header {
+    float: left;
+}
+
+
+#help  ul > li > div.header > img  {
+    margin: 2px 8px 0;
+} 
+
+#help  ul.info > li {
+    background-color: #3d8e4c;
+    width:  400px;
+    max-width: 500px;
+    margin: 8px 0 8px 0;
+    color: white;
+    list-style-type: none;
+    padding: 0;
+}
+
+#help  ul.info > li > div.text {
+    background-color: #48a659;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: right top;
+    font-size: 11px;
+    width: 400px;
+    min-height: 50px;
+    margin-left: 68px;
+    padding: 6px 0 6px 6px;
+    line-height: 1.5em;
+}
+
+#help  ul.comments  li {
+    background-color: #bebebe;
+    width:  400px;
+    max-width: 500px;
+    margin: 6px 0 8px 0;
+    color: white;
+    padding: 0;
+    list-style-type: none;
+}
+
+#help  ul.comments  li > div.header {
+    font-size: 10px;
+    margin-left: 5px;
+    margin-top: 5px;
+    font-weight: 700;
+}
+
+#help  ul.comments  li > div.header a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#help  ul.comments  li > div.header a:hover {
+    text-decoration: underline;
+}
+
+#help  ul.comments  span.date {
+    font-size: 10px;
+    font-style: italic;
+    font-weight: normal;
+    margin-top: 6px;
+    display: inline-block;
+}
+
+#help  ul.comments li > div.comment-links {
+    position: absolute;
+    right:0;
+    bottom: 2px;
+}
+
+#help  ul.comments li > div.text {
+    position: relative;
+    background-color: #e5e5e5;
+    font-size: 11px;
+    color: black;
+    width: 400px;
+    min-height: 44px;
+    margin-left: 68px;
+    padding: 6px 0 6px 6px;
+}
+
+#help  ul.comments li.children {
+    margin-top: -6px;
+    margin-left: 18px;
+}
+
+#help  ul.info > li.messages {
+    background-color: #666;
+}
+
+#help  ul.info > li.messages > div.text {
+    background-color: #dedddd;
+    color: #000;
+}
+.messages li {
+    list-style-type: disc;
+    list-style-position: inside;
+}
+
+#result {
+    font-size: 18px;
+    font-weight: bold;
+    line-height:1em;
+    height: 36px;
+    padding-right: -18px;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+img.listFile {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+}
+.categoryImg {
+    cursor: pointer;
+}
+.treefix {
+    position: relative;
+    width: 300px;
+}
+.treefix > img {
+    position: relative;
+    top: -4px;
+}
+.treefix > span {
+    position: relative;
+    left: 4px;
+    top: -5px;
+}
+.iceTreeRow a {
+    position: relative;
+    top: -4px;
+    left: -6px;
+}
+#tagsresults a {
+    padding: 5px;
+    display: block;
+}
+
+#uploadedFilesDialog {
+    margin: 20px;
+    padding: 10px;
+    background-color: #efefef;
+    border: 1px solid #bebebe;
+    line-height: 1.5em;
+    max-height: 300px;
+    overflow: auto;
+}
+
+#uploadedFilesDialog a.iceCmdLnk {
+    text-indent: -9999px;
+    background-image: url(../images/add-small.png);
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    position: relative;
+    top: 2px
+}

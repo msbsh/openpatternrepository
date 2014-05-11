@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Formatting.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\DATEN\Projects\Studium\openpatternrepository\30_sources\PatternRepository\web-interface\src\main\java\nl\rug\search\opr\controller\wizard\Formatting.java</td></tr></table>
+<pre>
+<span class="line-number"> 23</span> <span class="comment">/**</span>
+<span class="line-number"> 24</span> <span class="comment"> *</span>
+<span class="line-number"> 25</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">Nikolai</span> <span class="comment">Trzeszkowski</span> <span class="ST0">&lt;info@jn-t.de&gt;</span>
+<span class="line-number"> 26</span>  <span class="comment">*/</span>
+<span class="line-number"> 27</span> @ManagedBean(name = <span class="character">&quot;</span><span class="character">formattingStep</span><span class="character">&quot;</span>)
+<span class="line-number"> 28</span> @ViewScoped
+<span class="line-number"> 29</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> Formatting <span class="keyword-directive">implements</span> WizardStep {
+<span class="line-number"> 30</span> 
+<span class="line-number"> 31</span>     @ManagedProperty(value = <span class="character">&quot;</span><span class="character">#{addWizardController}</span><span class="character">&quot;</span>)
+<span class="line-number"> 32</span>     <span class="keyword-directive">protected</span> AddWizardController wizard;
+<span class="line-number"> 33</span>     <span class="keyword-directive">private</span> Consequence editConsequence = <span class="keyword-directive">null</span>;
+<span class="line-number"> 34</span>     <span class="keyword-directive">private</span> Force editForce = <span class="keyword-directive">null</span>;
+<span class="line-number"> 35</span>     <span class="keyword-directive">private</span> UploadHelper upload = <span class="keyword-directive">new</span> UploadHelper();
+<span class="line-number"> 36</span>     <span class="keyword-directive">private</span> TextBlock editTextBlock = <span class="keyword-directive">null</span>;
+<span class="line-number"> 37</span>     <span class="keyword-directive">private</span> Map&lt;String, TextBlock&gt; blocks = <span class="keyword-directive">new</span> HashMap&lt;String, TextBlock&gt;();
+<span class="line-number"> 38</span>     <span class="keyword-directive">private</span> String reload;
+<span class="line-number"> 39</span> 
+<span class="line-number"> 40</span>     <span class="keyword-directive">public</span> String getReload() {
+<span class="line-number"> 41</span>         <span class="keyword-directive">return</span> reload;
+<span class="line-number"> 42</span>     }
+<span class="line-number"> 43</span> 
+<span class="line-number"> 44</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setReload(String reload) {
+<span class="line-number"> 45</span>         <span class="keyword-directive">this</span>.reload = reload;
+<span class="line-number"> 46</span>     }
+<span class="line-number"> 47</span> 
+<span class="line-number"> 48</span>     <span class="keyword-directive">public</span> Map&lt;String, TextBlock&gt; getBlocks() {
+<span class="line-number"> 49</span>         <span class="keyword-directive">return</span> blocks;
+<span class="line-number"> 50</span>     }
+<span class="line-number"> 51</span> 
+<span class="line-number"> 52</span>     <span class="keyword-directive">public</span> TextBlock getEditTextBlock() {
+<span class="line-number"> 53</span>         <span class="keyword-directive">return</span> editTextBlock;
+<span class="line-number"> 54</span>     }
+<span class="line-number"> 55</span> 
+<span class="line-number"> 56</span>     <span class="keyword-directive">public</span> Consequence getEditConsequence() {
+<span class="line-number"> 57</span>         <span class="keyword-directive">return</span> editConsequence;
+<span class="line-number"> 58</span>     }
+<span class="line-number"> 59</span> 
+<span class="line-number"> 60</span>     <span class="keyword-directive">public</span> Force getEditForce() {
+<span class="line-number"> 61</span>         <span class="keyword-directive">return</span> editForce;
+<span class="line-number"> 62</span>     }
+<span class="line-number"> 63</span> 
+<span class="line-number"> 64</span>     <span class="keyword-directive">public</span> AddWizardController getWizard() {
+<span class="line-number"> 65</span>         <span class="keyword-directive">return</span> wizard;
+<span class="line-number"> 66</span>     }
+<span class="line-number"> 67</span> 
+<span class="line-number"> 68</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setWizard(AddWizardController wizard) {
+<span class="line-number"> 69</span>         <span class="keyword-directive">this</span>.wizard = wizard;
+<span class="line-number"> 70</span>     }
+<span class="line-number"> 71</span> 
+<span class="line-number"> 72</span>     @PostConstruct
+<span class="line-number"> 73</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> load() {
+<span class="line-number"> 74</span>         PatternVersion v = wizard.getPatternVersion();
+<span class="line-number"> 75</span>         Template template = v.getTemplate();
+<span class="line-number"> 76</span> 
+<span class="line-number"> 77</span>         blocks.clear();
+<span class="line-number"> 78</span> 
+<span class="line-number"> 79</span>         <span class="keyword-directive">for</span> (Component c : template.getTextComponents()) {
+<span class="line-number"> 80</span>             <span class="keyword-directive">if</span> (!blocks.containsKey(c.getIdentifier())) {
+<span class="line-number"> 81</span>                 TextBlock block = <span class="keyword-directive">new</span> TextBlock();
+<span class="line-number"> 82</span>                 block.setComponent(c);
+<span class="line-number"> 83</span>                 block.setText(<span class="character">&quot;&quot;</span>);
+<span class="line-number"> 84</span>                 blocks.put(c.getIdentifier(), block);
+<span class="line-number"> 85</span>             }
+<span class="line-number"> 86</span>         }
+<span class="line-number"> 87</span> 
+<span class="line-number"> 88</span>         <span class="keyword-directive">for</span> (TextBlock tb : v.getBlocks()) {
+<span class="line-number"> 89</span>             blocks.put(tb.getComponent().getIdentifier(), tb);
+<span class="line-number"> 90</span>         }
+<span class="line-number"> 91</span> 
+<span class="line-number"> 92</span>         <span class="keyword-directive">if</span> (template.getTextComponents().size() &gt; 0) {
+<span class="line-number"> 93</span>             editTextBlock = blocks.get(template.getTextComponents().get(0).getIdentifier());
+<span class="line-number"> 94</span>         }
+<span class="line-number"> 95</span> 
+<span class="line-number"> 96</span>         v.setBlocks(blocks.values());
+<span class="line-number"> 97</span>     }
+<span class="line-number"> 98</span> 
+<span class="line-number"> 99</span>     <span class="keyword-directive">public</span> UploadHelper getUpload() {
+<span class="line-number">100</span>         <span class="keyword-directive">return</span> <span class="keyword-directive">this</span>.upload;
+<span class="line-number">101</span>     }
+<span class="line-number">102</span> 
+<span class="line-number">103</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> removeFile(ActionEvent e) {
+<span class="line-number">104</span>         File f = (File) e.getComponent().getAttributes().get(<span class="character">&quot;</span><span class="character">file</span><span class="character">&quot;</span>);
+<span class="line-number">105</span>         <span class="keyword-directive">if</span> (f != <span class="keyword-directive">null</span>) {
+<span class="line-number">106</span>            wizard.getPatternVersion().getFiles().remove(f);
+<span class="line-number">107</span>         }
+<span class="line-number">108</span>     }
+<span class="line-number">109</span> 
+<span class="line-number">110</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> changeEditTextBlock(ActionEvent e) {
+<span class="line-number">111</span>         TextBlock textBlock = (TextBlock) e.getComponent().getAttributes().get(<span class="character">&quot;</span><span class="character">textBlock</span><span class="character">&quot;</span>);
+<span class="line-number">112</span>         <span class="keyword-directive">if</span> (textBlock == editTextBlock) {
+<span class="line-number">113</span>             editTextBlock = <span class="keyword-directive">null</span>;
+<span class="line-number">114</span>         } <span class="keyword-directive">else</span> {
+<span class="line-number">115</span>             editTextBlock = textBlock;
+<span class="line-number">116</span>         }
+<span class="line-number">117</span>     }
+</pre></body>
+</html>

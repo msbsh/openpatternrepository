@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:define name="pagetitle">
+        Success
+    </ui:define>
+
+    <ui:define name="page">
+        <ice:form>
+
+            <div id="content">
+                <h1>Pattern Templates</h1>
+                <h:dataTable value="#{listFilesController.files}" var="f">
+                    <h:column>
+                        <h:outputText value="#{f.id}"/>
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{f.name}"/>
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{f.mime}"/>
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{f.sizeInBytes}"/>
+                    </h:column>
+                    <h:column>
+
+                        <h:commandLink actionListener="#{listFilesController.preview}" value="preview">
+                            <f:attribute name="identification" value="#{f}" />
+                        </h:commandLink>
+
+                    </h:column>
+                </h:dataTable>
+            </div>
+            <div id="sidebar">
+                <ice:graphicImage value="#{listFilesController.content}" rendered="#{listFilesController.preview != null}" />
+            </div>
+        </ice:form>
+    </ui:define>
+
+</ui:composition>

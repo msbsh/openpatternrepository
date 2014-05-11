@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>FileJanitor.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\DATEN\Projects\Studium\openpatternrepository\30_sources\PatternRepository\web-interface\src\main\java\nl\rug\search\opr\FileJanitor.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> nl.rug.search.opr;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> org.apache.commons.logging.Log;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> org.apache.commons.logging.LogFactory;
+<span class="line-number"> 5</span> 
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> javax.servlet.http.HttpSessionEvent;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> javax.servlet.http.HttpSessionListener;
+<span class="line-number"> 8</span> <span class="keyword-directive">import</span> java.io.File;
+<span class="line-number"> 9</span> 
+<span class="line-number">10</span> <span class="comment">/**</span>
+<span class="line-number">11</span> <span class="comment"> *</span>
+<span class="line-number">12</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Martin</span> <span class="comment">Verspai</span> <span class="ST0">&lt;martin@verspai.de&gt;</span>
+<span class="line-number">13</span>  <span class="comment">*/</span>
+<span class="line-number">14</span> <span class="keyword-directive">pu</span><span class="keyword-directive">blic</span> <span class="keyword-directive">class</span> FileJanitor <span class="keyword-directive">implements</span> HttpSessionListener {
+<span class="line-number">15</span> 
+<span class="line-number">16</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> Log logger = LogFactory.getLog(FileJanitor.<span class="keyword-directive">class</span>);
+<span class="line-number">17</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> String FILE_UPLOAD_DIRECTORY = <span class="character">&quot;</span><span class="character">upload</span><span class="character">&quot;</span>;
+<span class="line-number">18</span> 
+<span class="line-number">19</span>     @Override
+<span class="line-number">20</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> sessionDestroyed(HttpSessionEvent event) {
+<span class="line-number">21</span>         logger.info(<span class="character">&quot;</span><span class="character">Cleaning up files for destroyed s</span><span class="character">ession.</span><span class="character">&quot;</span>);
+<span class="line-number">22</span>         String sessionId = event.getSession().getId();
+<span class="line-number">23</span> 
+<span class="line-number">24</span>         String applicationPath = event.getSession().getServletContext().getRealPath(
+<span class="line-number">25</span>                 event.getSession().getServletContext().getServletContextName());
+<span class="line-number">26</span> 
+<span class="line-number">27</span>         File userDirectory = <span class="keyword-directive">new</span> File(applicationPath + FILE_UPLOAD_DIRECTORY + sessionId);
+<span class="line-number">28</span> 
+<span class="line-number">29</span>         <span class="keyword-directive">if</span> (userDirectory.isDirectory()) {
+<span class="line-number">30</span>             <span class="keyword-directive">try</span> {
+<span class="line-number">31</span>                 userDirectory.delete();
+<span class="line-number">32</span>             }
+<span class="line-number">33</span>             <span class="keyword-directive">catch</span> (SecurityException e) {
+<span class="line-number">34</span>                 logger.error(<span class="character">&quot;</span><span class="character">Error deleting file upload directory: </span><span class="character">&quot;</span>, e);
+<span class="line-number">35</span>             }
+<span class="line-number">36</span>         }
+<span class="line-number">37</span>     }
+<span class="line-number">38</span> 
+<span class="line-number">39</span>     @Override
+<span class="line-number">40</span>     <span class="keyword-directive">publ</span><span class="keyword-directive">ic</span> <span class="keyword-directive">void</span> sessionCreated(HttpSessionEvent event) {
+<span class="line-number">41</span>         <span class="comment">// Nothing to do here</span>
+<span class="line-number">42</span>     }
+<span class="line-number">43</span> 
+<span class="line-number">44</span> }
+<span class="line-number">45</span> 
+<span class="line-number">46</span> 
+</pre></body>
+</html>

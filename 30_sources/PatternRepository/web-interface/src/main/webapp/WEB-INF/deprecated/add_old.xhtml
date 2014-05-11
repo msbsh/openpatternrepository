@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{common['page.pattern.add.title']}
+    </ui:define>
+
+    <ui:define name="page">
+        
+
+        <ice:form id="addPatternForm" binding="#{addPatternCtrl.formComponent}">
+            <div id="result">
+                <ice:message for="addPatternForm" errorClass="fail" infoClass="success" effect="#{addPatternCtrl.resultEffect}" visible="false"/>
+            </div>
+            <h1><h:outputText value="#{common['page.pattern.add.headline']}" /></h1>
+            <div class="left" style="float:left;">
+                &#160;
+                <ice:commandButton value="#{form['button.prev']}" actionListener="#{addPatternCtrl.previous}" tabindex="98" />
+                &#160;
+                <ice:commandButton value="#{form['button.next']}" actionListener="#{addPatternCtrl.next}" tabindex="99" />
+            </div>
+
+            <div class="right">
+                <ice:commandButton action="#{addPatternCtrl.submitForm}"
+                                   value="#{form['button.submit']}"
+                                   tabindex="98"
+                                   styleClass="confirm"
+                                   />
+                &#160;
+                <ice:commandButton actionListener="#{addPatternCtrl.reset}"
+                                   value="#{form['button.clear']}"
+                                   tabindex="98"
+                                   styleClass="abort"/>
+                &#160;
+            </div>
+            
+            
+            <ui:include src="#{addPatternCtrl.currentPage}" />
+
+            </ice:form>
+
+    </ui:define>
+
+</ui:composition>

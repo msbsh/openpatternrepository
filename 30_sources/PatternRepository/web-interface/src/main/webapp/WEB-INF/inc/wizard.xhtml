@@ -1,0 +1,60 @@
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:param name="currentAdd" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        Wizard
+    </ui:define>
+
+    <ui:define name="page">
+
+        <ice:form partialSubmit="true" id="#{addWizardController.formId}" enctype="multipart/form-data">
+            
+            <div id="result">
+                <ice:message for="#{addWizardController.formId}" errorClass="fail" infoClass="success" effect="#{addWizardController.resultEffect}" visible="false"/>
+            </div>
+            
+            <h1><h:outputText value="#{common['page.pattern.add.headline']}" /></h1>
+            <div class="left" style="float:left;">
+                &#160;
+                <h:commandButton value="#{form['button.prev']}"
+                                 action="#{addWizardController.previous}"
+                                 id="previous"
+                                 rendered="#{noPreviouspage==null || noPreviouspage==false}" />
+                &#160;
+                <h:commandButton value="#{form['button.next']}"
+                                 action="#{addWizardController.next}"
+                                 tabindex="99"
+                                 id="next"
+                                 rendered="#{noNextpage==null || noNextpage==false}" />
+            </div>
+
+            <div class="right">
+                <h:commandButton action="#{addWizardController.submitForm}"
+                                 value="#{form['button.submit']}"
+                                 styleClass="confirm"
+                                 id="submit" />
+                &#160;
+                <h:commandButton action="#{addWizardController.resetForm}"
+                                 value="#{form['button.clear']}"
+                                 styleClass="abort"
+                                 id="reset" />
+                &#160;
+            </div>
+
+            <ui:insert name="wizardstep">
+                next step here...
+            </ui:insert>
+
+        </ice:form>
+    </ui:define>
+
+</ui:composition>

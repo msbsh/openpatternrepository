@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="MacRoman"?>
+<!--
+    Document   : FileUploadConfig.xml
+    Created on : 29. November 2010, 10:06
+    Author     : daniel
+    Description:
+        Purpose of the document follows.
+-->
+<upload>
+    <supported-mime-types>
+        <type>image/png</type>
+        <type>image/jpeg</type>
+        <type>image/gif</type>
+        <type>application/pdf</type>
+    </supported-mime-types>
+    <max-file-size-mb>3</max-file-size-mb>
+</upload>
+

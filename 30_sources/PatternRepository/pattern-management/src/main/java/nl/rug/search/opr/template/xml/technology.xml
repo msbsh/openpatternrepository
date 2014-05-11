@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template>
+    <mappings>
+        <mapping>
+            <name>Description</name>
+            <description>1-5 sentences describing the patterns in (very) brief</description>
+            <identifier>description</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Version</name>
+            <description>The current version number of the technology. This is useful to find out later if the description is outdated and needs to be revised.</description>
+            <identifier>version</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+
+        <mapping>
+            <name>URL</name>
+            <description>A URL pointing to a location where the software can be obtained</description>
+            <identifier>url</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+
+        <mapping>
+            <name>License and Costs</name>
+            <description>The license under which the software is published and the costs if applicable</description>
+            <identifier>licosts</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Platforms</name>
+            <description>Platforms supported my the technology</description>
+            <identifier>platforms</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Context</name>
+            <description></description>
+            <identifier>context</identifier>
+            <mandatory>0</mandatory>
+            <type>CONTEXT</type>
+        </mapping>
+
+        <mapping>
+            <name>Problem</name>
+            <description></description>
+           <identifier>problem</identifier>
+            <mandatory>0</mandatory>
+            <type>PROBLEM</type>
+        </mapping>
+
+        <mapping>
+            <name>Forces</name>
+            <description></description>
+            <identifier>forces</identifier>
+            <type>FORCES</type>
+        </mapping>
+
+        <mapping>
+            <name>Solution</name>
+            <description></description>
+            <identifier>solution</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Consequences</name>
+            <description></description>
+            <identifier>consequences</identifier>
+            <type>CONSEQUENCES</type>
+        </mapping>
+
+         <mapping>
+            <name>References</name>
+            <description>References used in the description</description>
+            <identifier>references</identifier>
+            <type>DESCRIPTION</type>
+        </mapping>   
+
+    </mappings>
+</template>

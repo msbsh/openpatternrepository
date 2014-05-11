@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template>
+    <mappings>
+        <mapping>
+            <name>Example</name>
+            <description></description>
+            <identifier>example</identifier>
+            <mandatory>0</mandatory>
+            <type>PROBLEM</type>
+        </mapping>
+
+        <mapping>
+            <name>Context</name>
+            <description></description>
+            <identifier>context</identifier>
+            <mandatory>0</mandatory>
+            <type>DESCRIPTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Problem</name>
+            <description></description>
+            <identifier>problem</identifier>
+            <mandatory>0</mandatory>
+            <type>PROBLEM</type>
+        </mapping>
+
+        <mapping>
+            <name>Solution</name>
+            <description></description>
+            <identifier>solution</identifier>
+            <mandatory>0</mandatory>
+            <type>SOLUTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Structure</name>
+            <description></description>
+            <identifier>structure</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Dynamics</name>
+            <description></description>
+            <identifier>dynamics</identifier>
+            <mandatory>0</mandatory>
+            <type>SOLUTION</type>
+        </mapping>
+        <mapping>
+            <name>Implementation</name>
+            <description></description>
+            <identifier>implementation</identifier>
+            <type>SOLUTION</type>
+        </mapping>
+
+        <mapping>
+            <name>Consequences</name>
+            <description></description>
+            <identifier>consequences</identifier>
+            <type>CONSEQUENCES</type>
+        </mapping>
+    </mappings>
+</template>

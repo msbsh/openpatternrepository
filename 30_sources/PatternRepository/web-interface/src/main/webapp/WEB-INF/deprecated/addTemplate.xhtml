@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{common['page.template.add.title']}
+    </ui:define>
+
+    <ui:define name="page">
+
+        <ice:form id="addTemplateForm" binding="#{addTemplateCtrl.formComponent}">
+            <div id="result">
+                <ice:message for="addTemplateForm" errorClass="fail" infoClass="success" effect="#{addTemplateCtrl.resultEffect}" visible="false"/>
+            </div>
+            <div id="content">
+
+                <h1><h:outputText value="#{common['page.template.add.headline']}" /></h1>
+
+                <table>
+
+                    <tr><td colspan="2"><hr /></td></tr>
+
+                    <tr>
+                        <td><ice:outputLabel for="name" value="#{form['label.name']}"><ice:outputText value="#{form['constraint.required']}" styleClass="required" /></ice:outputLabel></td>
+                    <td>
+                    <ice:inputText label="#{form['label.name']}" partialSubmit="true" value="#{addTemplateCtrl.name}" id="name" required="true" tabindex="10" >
+                        <f:validateLength maximum="255" />
+                        <f:validator validatorId="RegexValidator" />
+                        <f:attribute name="startsWith" value="A-Za-z" />
+                        <f:attribute name="inputCharset" value="A-Za-z0-9- " />
+                    </ice:inputText>
+
+                    </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <small>
+                                <ice:outputText value=" #{form['constraint.startWithAlpha']}" nospan="true" />,
+                                <ice:outputText value=" #{form['constraint.unique']}" nospan="true" />,
+                                <ice:outputText value=" #{form['constraint.maxlength']}" nospan="true" /> 255,
+                                <ice:outputText value=" #{form['constraint.inputCharset']}" nospan="true" /> [a-z0-9- ]
+                            </small>
+                        </td>
+                    </tr>
+
+                    <tr><td colspan="2"><hr /></td></tr>
+
+                    <tr>
+                        <td><ice:outputLabel for="description" value="#{form['label.description']}" /></td>
+                    <td>
+                    <ice:inputText label="#{form['label.description']}" value="#{addTemplateCtrl.description}" id="description" tabindex="11" >
+                        <f:validateLength maximum="255" />
+                    </ice:inputText>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <small>
+                                <ice:outputText value=" #{form['constraint.maxlength']}" nospan="true" /> 255
+                            </small>
+                        </td>
+                    </tr>
+
+                    <tr><td colspan="2"><hr /></td></tr>
+
+                    <tr>
+                        <td><ice:outputLabel for="author" value="#{form['label.author']}" /></td>
+                    <td>
+                        <ice:inputText label="#{form['label.author']}" value="#{addTemplateCtrl.author}" id="author" tabindex="12" >
+                            <f:validateLength maximum="255" />
+                        </ice:inputText>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <small>
+                                <ice:outputText value=" #{form['constraint.maxlength']}" nospan="true" /> 255
+                            </small>
+                        </td>
+                    </tr>
+
+                    <tr><td colspan="2"><hr /></td></tr>
+
+                    <tr>
+                        <td><ice:outputLabel for="data" value="#{form['label.xml']}"><ice:outputText value="#{form['constraint.required']}" styleClass="required" /></ice:outputLabel></td>
+                    <td>
+                    <ice:inputTextarea label="#{form['label.xml']}" partialSubmit="true" id="data" value="#{addTemplateCtrl.xmlData}" rows="20" cols="60" required="true" tabindex="13" >
+                        <f:validator validatorId="XMLTemplateValidator" />
+                    </ice:inputTextarea>
+                    </td>
+                    </tr>
+
+                    <tr><td colspan="2"><hr /></td></tr>
+
+                    <tr>
+                        <td colspan="2" class="right">
+                    <h:commandButton value="#{form['button.add']}" action="#{addTemplateCtrl.submitForm}" tabindex="14" />
+                    </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div id="sidebar">
+                <div id="help">
+                    <ul class="info">
+                        <li class="messages">
+                            <div class="header"></div>
+                            <div class="text">
+                                <ice:messages layout="list" errorClass="error" warnClass="warning" fatalClass="fatal" infoClass="information" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <img src="images/info.png" alt="information" />
+                            </div>
+                            <div class="text">
+                                <b><ice:outputText value="#{help['template.add.info.headline']}" /></b><br />
+                                <ice:outputText value="#{help['template.add.info.content']}" escape="false" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <img src="images/info.png" alt="information" />
+                            </div>
+                            <div class="text">
+                                <b><ice:outputText value="#{help['template.add.tags.headline']}" /></b><br />
+                                <ice:outputText value="#{help['template.add.tags.content']}" escape="false" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ice:form>
+    </ui:define>
+
+</ui:composition>

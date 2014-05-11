@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+  <persistence-unit name="PatternBase" transaction-type="JTA">
+    <provider>oracle.toplink.essentials.PersistenceProvider</provider>
+    <jta-data-source>jdbc/opr</jta-data-source>
+    <mapping-file>META-INF/mysql_orm.xml</mapping-file>
+    <class>nl.rug.search.opr.entities.pattern.Category</class>
+    <class>nl.rug.search.opr.entities.pattern.Consequence</class>
+    <class>nl.rug.search.opr.entities.pattern.Driver</class>
+    <class>nl.rug.search.opr.entities.pattern.File</class>
+    <class>nl.rug.search.opr.entities.pattern.Force</class>
+    <class>nl.rug.search.opr.entities.pattern.License</class>
+    <class>nl.rug.search.opr.entities.pattern.Pattern</class>
+    <class>nl.rug.search.opr.entities.pattern.PatternVersion</class>
+    <class>nl.rug.search.opr.entities.pattern.QualityAttribute</class>
+    <class>nl.rug.search.opr.entities.pattern.Tag</class>
+    <class>nl.rug.search.opr.entities.pattern.TextBlock</class>
+    <class>nl.rug.search.opr.entities.pattern.relation.Alternative</class>
+    <class>nl.rug.search.opr.entities.pattern.relation.Combination</class>
+    <class>nl.rug.search.opr.entities.pattern.relation.Relationship</class>
+    <class>nl.rug.search.opr.entities.pattern.relation.RelationshipType</class>
+    <class>nl.rug.search.opr.entities.pattern.relation.Variant</class>
+    <class>nl.rug.search.opr.entities.pattern.relation.BelongsTo</class>
+    <class>nl.rug.search.opr.entities.template.Component</class>
+    <class>nl.rug.search.opr.entities.template.Template</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="toplink.session.customizer" value="nl.rug.search.opr.ToplinkSessionCustomiser"/>
+      <property name="toplink.ddl-generation" value="create-tables"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="WEB-INF/inc/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:opr="http://rug.nl/search/opr/components"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:param name="currentBrowse" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">#{common['page.title.pattern.view']}</ui:define>
+
+    <ui:define name="page">
+        <ice:form id="view">
+            <div id="content">
+                <ice:panelGroup rendered="#{viewPatternCtrl.pattern == null}" >
+                    <h1>#{help['hint.pattern.view.noPattern.title']}</h1>
+                    <ice:outputText value="#{help['hint.pattern.view.noPattern.content']}" escape="false" />
+                </ice:panelGroup>
+
+                <ice:panelGroup rendered="#{viewPatternCtrl.pattern != null}" >
+                    <h1><ice:outputText value="#{viewPatternCtrl.pattern.name}" /></h1>
+
+                    <div id="toc">
+                        <div class="hideArrow" ></div>
+                        <span class="title">Contents</span>
+                        <ul>
+                            <ice:panelSeries value="#{viewPatternCtrl.content}" var="content">
+                                <li>
+                                    <a href="wiki/#{content.fullAnchor}">#{content.headline}</a>
+                                </li>
+                            </ice:panelSeries>
+                        </ul>
+                    </div>
+
+                    <p>
+                    <ice:panelSeries value="#{viewPatternCtrl.content}" var="content">
+                        <b>
+                            <a name="#{content.anchor}">
+                                #{content.headline}
+                            </a>
+                        </b><br />
+                        <ice:outputText escape="false" value="#{func:wiki2html(content.body)}" /><br /><br />
+                    </ice:panelSeries>
+                    </p>
+                </ice:panelGroup>
+
+            </div>
+            <div id="sidebar">
+
+                <div id="help">
+                    <ice:panelGroup rendered="#{viewPatternCtrl.pattern != null}" >
+                        <ul class="info">
+                            <li>
+                                <div class="header">
+                                    <img src="images/info.png" alt="#{form['label.patternInformation']}" />
+                                </div>
+                                <div class="text">
+                                    <opr:patternMenu pattern="#{viewPatternCtrl.pattern}" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="header">
+                                    <img src="images/info.png" alt="#{form['label.patternInformation']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{form['label.patternInformation']}" /></b><br />
+
+                                    <ice:outputText value="#{form['label.author']}: " rendered="#{viewPatternCtrl.version.author != null}" />
+                                    <ice:outputText value="#{viewPatternCtrl.version.author}" />
+                                    <ice:outputText value="#{common['break']}" rendered="#{viewPatternCtrl.version.author != null}" escape="false" />
+
+                                    <ice:outputText value="#{form['label.source']}: " rendered="#{viewPatternCtrl.version.source != null}" />
+                                    <ice:outputText value="#{viewPatternCtrl.version.source}" />
+                                    <ice:outputText value="#{common['break']}" rendered="#{viewPatternCtrl.version.source != null}" escape="false" />
+
+                                    <ice:outputText value="#{form['label.license']}: " />
+                                    <a href="#{viewPatternCtrl.version.license.licenseSource}" target="_blank" >
+                                        #{viewPatternCtrl.version.license.name}
+                                    </a><br />
+
+                                    <ice:outputText value="#{form['label.documentationDate']}: " />
+                                    <ice:outputText value="#{viewPatternCtrl.documentationDate}" />
+                                    <br />
+
+                                    <ice:outputText value="#{form['label.patternVersion']}: " />
+                                    <ice:outputText value="#{viewPatternCtrl.version.id}" />
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="header">
+                                    <img src="images/impact.png" alt="#{form['label.qualityIndicators']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{form['label.qualityIndicators']}" /></b><br />
+                                    <ice:panelSeries value="#{viewPatternCtrl.qualityAttributes}" var="qualityAttribute" rendered="#{!empty viewPatternCtrl.qualityAttributes}">
+                                        <ice:panelGroup>
+                                            <ice:outputText value=" #{qualityAttribute.name}"/>
+                                            <ice:panelGroup styleClass="#{qualityAttribute.indicator}" style="display: inline-block;margin-left: 5px;" />
+                                        </ice:panelGroup>
+                                    </ice:panelSeries>
+                                    <ice:outputText value="#{form['label.noQualityAttributes']}" rendered="#{empty viewPatternCtrl.qualityAttributes}"/>
+                                </div>
+                            </li>
+                            <!--
+                                                    <li>
+                                                        <div class="header">
+                                                            <img src="images/impact.png" alt="#{form['label.relatedPatterns']}" />
+                                                        </div>
+                                                        <div class="text">
+                                                            <b><ice:outputText value="#{form['label.relatedPatterns']}:" /></b><br />
+                                                            <ice:panelSeries value="#{viewPatternCtrl.relations}" var="relation" rendered="#{!empty viewPatternCtrl.relations}">
+                                                                <ice:panelCollapsible expanded="false" actionListener="#{relation.expandListener}" rendered="#{!empty relation.content.description}">
+                                                                <f:facet name="header">
+                                                                    <ice:panelGroup>
+                                                                        <ice:graphicImage value="/images/rightArrow.png" rendered="#{!relation.expanded}" />
+                                                                        <ice:graphicImage value="/images/downArrow.png" rendered="#{relation.expanded}" />
+                                                                        &#160;
+                                                                        <ice:commandLink action="VIEWPATTERN" >
+                                                                            <ice:outputText value="#{relation.content.patternB.name}" />
+                                                                            <f:param name="patternId" value="#{relation.content.patternB.id}" />
+                                                                        </ice:commandLink>
+                                                                        <ice:outputText value="&#160;(#{relation.content.type.class.simpleName})" />
+                                                                    </ice:panelGroup>
+                                                                </f:facet>
+                                                                    <ice:outputText value="#{form['label.description']}:" />
+                                                                    <br />
+                                                                    <ice:outputText value="#{relation.content.description}" />
+                                                                    <br /><br />
+                                                            </ice:panelCollapsible>
+                                                            <ice:panelGroup rendered="#{empty relation.content.description}">
+                                                                &#160;&#160;&#160;&#160;&#160;
+                                                                <ice:commandLink action="VIEWPATTERN" >
+                                                                    <ice:outputText value="#{relation.content.patternB.name}" />
+                                                                    <f:param name="patternId" value="#{relation.content.patternB.id}" />
+                                                                </ice:commandLink>
+                                                                <ice:outputText value="&#160;(#{relation.content.type.class.simpleName})" />
+                                                            </ice:panelGroup>
+                                                        </ice:panelSeries>
+                                                        <ice:outputText value="#{form['label.noRelations']}" rendered="#{empty viewPatternCtrl.relations}" />
+                                                        </div>
+                                                    </li>
+                            -->
+                            <li>
+                                <div class="header">
+                                    <img src="images/impact.png" alt="#{form['label.relatedPatterns']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{form['label.relatedPatterns']}" /></b><br />
+                                    <hr style="margin-right:5px;"/>
+                                    <ice:panelSeries value="#{viewPatternCtrl.pattern.relations}" var="relation" rendered="#{!empty viewPatternCtrl.pattern.relations}">
+                                        <ice:panelGroup>
+                                            <b><ice:outputText value="#{form['label.name']}:" /></b>
+                                            <h:outputLink value="wiki/#{relation.patternA.uniqueName}" rendered="#{!empty relation.patternA}">
+                                                #{relation.patternA.name}
+                                            </h:outputLink>--
+                                            <h:outputLink value="wiki/#{relation.patternB.uniqueName}" rendered="#{!empty relation.patternB}">
+                                                #{relation.patternB.name}
+                                            </h:outputLink>
+                                            <br />
+                                            <b><ice:outputText value="#{form['label.relationType']}:" /></b>
+                                            <ice:outputText value="#{relation.type.class.simpleName}"/>
+                                            <br />
+                                            <b><ice:outputText value="#{form['label.description']}:" rendered="#{!empty relation.description}" /></b>
+                                            <ice:outputText value="#{relation.description}" rendered="#{!empty relation.description}" />
+                                            <ice:outputText value="#{common['break']}" rendered="#{!empty relation.description}" escape="false" />
+                                        </ice:panelGroup>
+                                        <hr style="margin-right:5px;"/>
+                                    </ice:panelSeries>
+                                    <ice:outputText value="#{form['label.noRelations']}" rendered="#{empty viewPatternCtrl.relations}" />
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="header">
+                                    <img src="images/impact.png" alt="#{form['label.tags']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{form['label.tags']}" /></b><br />
+                                    <hr style="margin-right:5px;"/>
+                                    <ice:panelSeries value="#{viewPatternCtrl.pattern.tags}" var="tag" rendered="#{!empty viewPatternCtrl.pattern.tags}">
+                                        <ice:panelGroup>
+                                            <ice:outputText value="#{tag.name}" /><br />
+                                        </ice:panelGroup>
+                                    </ice:panelSeries>
+                                    <ice:outputText value="#{form['label.noTags']}" rendered="#{empty viewPatternCtrl.pattern.tags}" />
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="header">
+                                    <img src="images/impact.png" alt="#{form['label.Forces']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{form['label.forces']}" /></b><br />
+                                    <hr style="margin-right:5px;"/>
+                                    <ice:panelSeries value="#{viewPatternCtrl.version.forces}" var="force" rendered="#{!empty viewPatternCtrl.version.forces}">
+                                        <ice:panelGroup>
+                                            <b><ice:outputText value="#{form['label.description']}:" /></b>
+                                            <ice:outputText value="#{force.description}" rendered="#{!empty force.description}" escape="false" />
+                                            <br />
+
+                                            <b><ice:outputText value="#{form['label.functionality']}:" rendered="#{!empty force.functionality}" /></b>
+                                            <ice:outputText value="#{force.functionality}" rendered="#{!empty force.functionality}" />
+                                            <ice:outputText value="#{common['break']}" rendered="#{!empty force.functionality}" escape="false" />
+
+                                            <b><ice:outputText value="#{form['label.qualityAttribute']}:" rendered="#{!empty force.qualityAttribute}" /></b>
+                                            <ice:outputText value="#{force.qualityAttribute.name}" rendered="#{!empty force.qualityAttribute}" />
+                                            <!--<ice:panelGroup styleClass="#{force.impactIndication}" style="display: inline-block;margin-left: 5px;" rendered="#{!empty force.qualityAttribute}" />-->
+                                            <ice:outputText value="(#{force.impactIndication})" rendered="#{!empty force.qualityAttribute}" />
+                                        </ice:panelGroup>
+                                        <hr style="margin-right:5px;"/>
+                                    </ice:panelSeries>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="header">
+                                    <img src="images/impact.png" alt="#{form['label.consequences']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{form['label.consequences']}" /></b><br />
+                                    <hr style="margin-right:5px;"/>
+                                    <ice:panelSeries value="#{viewPatternCtrl.version.consequences}" var="consequence" rendered="#{!empty viewPatternCtrl.version.consequences}">
+                                        <ice:panelGroup rendered="#{!empty consequence.description}">
+                                            <b><ice:outputText value="#{form['label.description']}:" /></b>
+                                            <ice:outputText value="#{consequence.description}" rendered="#{!empty consequence.description}" escape="false" />
+                                            <br />
+
+                                            <b><ice:outputText value="#{form['label.qualityAttribute']}:" rendered="#{!empty consequence.qualityAttribute}" /></b>
+                                            <ice:outputText value="#{consequence.qualityAttribute.name}" rendered="#{!empty consequence.qualityAttribute}" />
+                                            <!--<ice:panelGroup styleClass="#{consequence.impactIndication}" style="display: inline-block;margin-left: 5px;" rendered="#{!empty consequence.qualityAttribute}" />-->
+                                            <ice:outputText value="(#{consequence.impactIndication})" rendered="#{!empty consequence.qualityAttribute}" />
+                                        </ice:panelGroup>
+                                        <hr style="margin-right:5px;"/>
+                                    </ice:panelSeries>
+                                </div>
+                            </li>
+
+
+                            <li>
+                                <div class="header">
+                                    <img src="images/impact.png" alt="#{form['label.relatedFiles']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{form['label.relatedFiles']}:" /></b><br />
+                                    <hr style="margin-right:5px;"/>
+                                    <opr:fileList files="#{viewPatternCtrl.version.files}" bean="#{viewPatternCtrl}" />
+                                </div>
+                            </li>
+                            <!--
+                            <li>
+                                <div class="header">
+                                    <img src="images/impact.png" alt="#{form['label.comments']}" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="Community" /></b><br />
+                                    <hr style="margin-right:5px;"/>
+                                    <b><ice:outputText value="Rating:" /></b><br />
+                                    <img align="middle" src="images/rating.png" title="Rating and comment functions are not implemented yet" alt="Rating and comment functions are not implemented yet" /> (23 Raters) <br />
+                                    <b><ice:outputText value="#{form['label.comments']}:" /></b><br />
+                                    <ice:panelSeries value="#{viewPatternCtrl.version.files}" var="file" rendered="#{!empty viewPatternCtrl.version.files}">
+                                        <ice:panelGroup>
+                                            <ice:outputText value="Anon: 26.02.10: This comment is not very intelligent" /><br />
+                                            <ice:outputText value="Anon: 26.02.10: This comment is not very intelligent" /><br />
+                                            <ice:outputText value="Peter: 27.02.10: So is your comment" /><br />
+                                        </ice:panelGroup>
+                                        <hr style="margin-right:5px;"/>
+                                    </ice:panelSeries>
+                                    <ice:outputText value="#{form['label.noFiles']}" rendered="#{empty viewPatternCtrl.version.files}" />
+                                </div>
+                            </li>
+                            -->
+                        </ul>
+                    </ice:panelGroup>
+                </div>
+            </div>
+        </ice:form>
+    </ui:define>
+
+</ui:composition>

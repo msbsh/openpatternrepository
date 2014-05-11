@@ -1,0 +1,42 @@
+Hallo zusammen,
+
+morgen möchte ich gerne mit euch zusammen ein Code-Review durchführen. 
+Dieses Review ist aus zwei Gründen sehr wichtig: 1. Es steigert die 
+Qualität des OPRs und 2. Es ist Teil meines Kompetenzplans :-).
+
+Thema:
+Da der FileUpload einige Änderungen während des SoFas erfahren hat, 
+werden wir uns die Code-Dateien aus dem Web-Projekt vornehmen, die mit 
+dem FileUpload zu tun haben. Diese Dateien werde ich morgen ausgedruckt 
+für euch mitbringen:
+nl/rug/search/opr/FileJanitor.java
+nl/rug/search/opr/FileServlet.java
+nl/rug/search/opr/InitializationServlet.java
+nl/rug/search/opr/backingbean/UploadHelper.java
+nl/rug/search/opr/controller/EditVersionController.java
+nl/rug/search/opr/controller/wizzard/Formatting.java
+
+Benötigte Zeit:
+Für das Review sind 1,5 Stunden angesetzt, weshalb ich als Zeit 15:30 
+Uhr bis 17:00 Uhr vorschlagen würde. 
+
+Ablauf:
+1. Vorstellen der Methodik Source Code Review (5 Minuten)
+2. Individuelles Durcharbeiten des Quellcodes (25 Minuten)
+3. Review als Gruppensitzung (50 Minuten)
+4. Abschlussbesprechung (10 Minuten)
+
+Für das Durcharbeiten des Quellcodes und die Gruppensitzung werden die 
+Teilnehmer verschiedene Rollen einnehmen. Dadurch ist es möglich den 
+Quellcode aus verschiedenen Blickwinkeln zu betrachten. Darüber hinaus 
+hilft eine Checkliste von möglichen Problemen die einzelnen Aspekte 
+besser durchgehen zu können. 
+
+Informationen zum Reviewprozess:
+http://code.google.com/p/openpatternrepository/wiki/ReviewProcess
+
+Rollenverteilung und Checkliste:
+http://code.google.com/p/openpatternrepository/wiki/CheckList
+
+Viele Grüße,
+Georg

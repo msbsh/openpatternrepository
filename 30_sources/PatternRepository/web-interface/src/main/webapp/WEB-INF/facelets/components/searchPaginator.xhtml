@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <div class="navigation" style="margin-top: 10px;">
+        <span class="searchinfo">#{searchCtrl.count} Patterns found for <em>#{searchCtrl.fulltext}</em>&#160; (<h:outputText value="in #{searchCtrl.benchmark}" /> seconds). Page #{searchCtrl.currentPage} of #{searchCtrl.pageCount}</span>
+        <ice:panelGroup styleClass="paginator right" rendered="#{searchCtrl.pageCount>1}">
+            <ice:panelGroup styleClass="link #{searchCtrl.previousPageAvailable?'':'hidden'}">
+                <ice:commandLink value="&#171;" actionListener="#{searchCtrl.prev}" />
+            </ice:panelGroup><ui:repeat value="#{searchCtrl.pages}" var="page"><div class="link"><ice:commandLink value="#{page}" actionListener="#{searchCtrl.page}"><f:attribute value="#{page}" name="page" /></ice:commandLink></div></ui:repeat><ice:panelGroup styleClass="link #{searchCtrl.nextPageAvailable?'':'hidden'}">
+                <ice:commandLink value="&#187;" actionListener="#{searchCtrl.next}" />
+            </ice:panelGroup>
+        </ice:panelGroup>
+    </div>
+    
+</ui:composition>

@@ -1,0 +1,622 @@
+/*
+ * green:       #48a659
+ * lightgray:   #4f4f4f
+ * gray:        #f4f2f2
+ * dark-gray:   #666
+ * red:         #bd0000
+*/
+#page {
+    font-family: "Verdana", sans-serif;
+}
+
+#page h1 {
+    color: #48a659;
+    margin-top: 1em;
+    margin-bottom: 1.2em;
+    font-size: 1.5em;
+}
+
+#page h2 {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-bottom: 0.5em; 
+}
+
+#page h3 {
+    font-weight: bold;
+}
+
+#page h4 {
+    font-style: italic;
+    font-size:1.1em;
+}
+
+#page p {
+    margin-top: 0.5em;
+}
+
+#page input {
+    height: 19px;
+}
+
+#page textarea {
+    height: 200px;
+}
+
+#page input, #page textarea, #page select{
+    width: 488px;
+    font: 14px/1.5em arial,sans-serif;
+    color: #4f4f4f;
+    border: 1px solid #4f4f4f;
+    margin-top: 0.2em;
+    background-color: #f4f2f2;
+    background-repeat: repeat-x;
+    padding-top: 3px;
+    padding-bottom: 1px;
+}
+
+
+#page input:focus, #page textarea:focus  {
+    background-color: #fff;
+}
+
+input[type=submit], #page input[type=reset],#page input[type=file]  {
+    background-color: #fff;
+    width: 125px;
+    height: 25px;
+    color: #fff;
+    border: 0;
+    font-size: 0.8em;
+    margin:0;
+    padding:0;
+    background-image: url(../images/formButton.png);
+}
+
+input[type=submit]:active, #page input[type=submit]:focus,#page input[type=file]:active, #page input[type=file]:focus {
+    background-image: url(../images/formButtonActive.png);
+}
+
+#page input[type=submit], #page input[type=reset],#page input[type=file]  {
+    background-color: #fff;
+    width: 125px;
+    height: 25px;
+    color: #fff;
+    border: 0;
+    font-size: 0.8em;
+    margin:0;
+    padding:0;
+    background-image: url(../images/formButton.png);
+}
+
+#page input[type=submit]:active, #page input[type=submit]:focus,#page input[type=file]:active, #page input[type=file]:focus {
+    background-image: url(../images/formButtonActive.png);
+}
+
+#page label {
+    width: 100px;
+    float: left;
+}
+
+#page td {
+    vertical-align: top;
+}
+
+#page input.error {
+    background-image: url(../images/error.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    color: #bd0000;
+}
+
+#page select.error {
+    color: #bd0000;
+}
+
+#page textarea.error {
+    background-image: url(../images/error.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    color: #bd0000;
+}
+
+#page li {
+    list-style-type: disc;
+    list-style-position: inside;
+}
+
+#page ul, div.text ul {
+    margin-left: 1em;
+}
+
+form small {
+    margin: .5em 0 .5em;
+    font-size: .75em;
+    color: #666;
+    font-variant: small-caps;
+}
+
+form hr {
+    border: 0;
+    border-top: 1px #666 dashed;
+}
+
+.required {
+    color: #bd0000;
+    font-weight: bold;
+}
+
+.tagVeryOften {
+    color: #48a659;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.tagOften {
+    color: #48a659;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.tagSometimes {
+    color: #48a659;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 0.75em;
+}
+
+.error {
+    color: #bd0000;
+}
+
+.fatal {
+    color: #fff;
+    background-color: #bd0000;
+}
+
+.warning {
+    color: #666;
+}
+
+.information {
+    color: #48a659;
+}
+
+.success {
+    background-color: #48a659;
+    color: #fff;
+    display: block;
+    padding: 8px;
+}
+
+.fail {
+    background-color: #bd0000;
+    color: #fff;
+    display: block;
+    padding: 8px;
+}
+
+#page input[type=submit].confirm {
+    background-image: url(../images/buttonConfirm.png);
+}
+
+#page input[type=submit].confirm:active, #page input[type=submit].confirm:focus {
+    background-image: url(../images/buttonConfirmActive.png);
+}
+
+#page input[type=submit].abort {
+    background-image: url(../images/buttonAbort.png);
+}
+
+#page input[type=submit].abort:active, #page input[type=submit].abort:focus {
+    background-image: url(../images/buttonAbortActive.png);
+}
+
+#page .wikiSyntax {
+    background-image: url(../images/wikiSyntax.png);
+    background-position: 98% bottom;
+    background-repeat: no-repeat;
+    min-height:200px;
+}
+
+.iceDatTbl {
+    border-bottom: 1px solid #dedddd;
+    width: 100%;
+}
+
+.iceDatTblCol1, .iceDatTblCol2 {
+    border-top: 1px solid #dedddd;
+}
+
+.iceDatTblRow1 {
+}
+
+.iceDatTblRow2 {
+}
+
+.iceRowSelSelected, .iceRowSelSelectedMouseOver {
+    background-color: #666;
+    color: #fff;
+}
+
+.iceRowSelMouseOver {
+    background-color: #444;
+    color: #fff;
+}
+
+#page .fanPanel {
+}
+
+#page .fanPanelHdr {
+    background-image: url(../images/hideArrow.png);
+    background-repeat: no-repeat;
+    padding-left: 15px;
+    background-position: 0 22px;
+}
+
+#page .fanPanelColpsdHdr {
+    background-image: url(../images/downArrow.png);
+    background-repeat: no-repeat;
+    padding-left: 15px;
+    background-position: 0 22px;
+}
+
+#page .fanPanelCnt {
+
+}
+
+.iceOutProgBg {
+    border: 1px solid #666;
+    width: 350px;
+    height: 12px;
+    background-image: url(../images/progressBar.png);
+    background-repeat: repeat;
+    font-size: 10px;
+    line-height: 10px;
+}
+
+.iceOutProgFill {
+    background-color: #000;
+    background-image: url(../images/progressCompleted.png);
+    background-repeat: repeat;
+    height: 12px;
+}
+
+.iceOutProgTxt {
+    color: #fff;
+}
+
+.dropzone {
+    background-image: url(../images/dropzone.png);
+    background-position: 98% bottom;
+    min-height:200px;
+    background-color:#f4f2f2;
+    border: 1px solid #4f4f4f;
+    color:black;
+}
+
+.tagzone {
+    background-image: url(../images/tagzone.png);
+    background-position: 98% bottom;
+    min-height:200px;
+    background-color:#f4f2f2;
+    border: 1px solid #4f4f4f;
+    color:black;
+}
+
+#page .iceSelInpTxtList {
+    background-color: #fff;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+#page .iceSelInpTxtRow {
+    border-bottom: 1px solid #000;
+}
+
+#page .iceSelInpTxtSelRow {
+    color: #fff;
+    background-color: #48a659;
+    border-bottom: 1px solid #000;
+}
+
+div.verypositive {
+    width: 40px;
+    height: 20px;
+    background-image: url(../images/positive.png);
+    background-repeat: repeat-x;
+}
+
+.positive {
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/positive.png);
+}
+
+.neutral {
+    width: 40px;
+    height: 20px;
+    background-image: url(../images/neutral.png);
+}
+
+.negative {
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/negative.png);
+}
+
+.verynegative {
+    width: 40px;
+    height: 20px;
+    background-image: url(../images/negative.png);
+    background-repeat: repeat-x;
+}
+
+
+.wide {
+    width: 100%;
+}
+
+.selected {
+    font-weight: bold;
+}
+
+.searchresults .item {
+    border-bottom: 1px solid #666;
+    padding-bottom: 10px;
+}
+
+.searchresults .item span{
+    font-size: 12px;
+    line-height: 1.3em;
+}
+
+.searchresults .item h2 {
+    margin-bottom: 5px;
+}
+
+.searchresults .item a{
+    text-decoration: none;
+    color: #48a659;
+}
+
+.searchresults .searchinfo {
+    font-size: 9px;
+    color: #4c4c4c;
+}
+
+.searchresults .searchinfo em {
+    font-weight: bold;
+}
+
+.searchresults .item em {
+    background-color: yellow;
+    font-style: italic;
+}
+
+.noresults {
+    margin: 50px;
+    text-align: center;
+}
+
+.searchresults .navigation div.link {
+    display:inline-block;
+    border:1px solid #666;
+    width:22px;
+    height:22px;
+    margin: 1px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.searchresults .navigation div.link a{
+    text-decoration: none;
+    color: #48a659;
+}
+
+.searchresults .navigation div.link a:hover{
+    color: #000;
+    text-decoration: underline;
+}
+
+.searchresults .paginator {
+    display: inline-block;
+    float:right;
+}
+
+#tagsresults .item {
+    font-weight: bold;
+    font-size: 1em;
+    border-bottom: 1px solid #666;
+    margin-bottom: 5px;
+     color: #48a659;
+    text-decoration: none;
+}
+
+#tagsresults .item span{
+    font-size: 12px;
+    line-height: 1.3em;
+}
+
+#tagsresults .item a{
+    
+   
+}
+
+#tagsresults .item a:hover{
+    text-decoration: underline;
+    color: #48a659;
+}
+
+#page .extendedSearch {
+    font-size: 14px;
+}
+
+#page .extendedSearch input, #page .extendedSearch select {
+    background-color: #82c19c;
+    border: 0;
+    padding: 0;
+    border-bottom: 3px dotted #48a659;
+    color: #fff;
+    margin-bottom: 2px;
+    font-weight: bold;
+    line-height: 15px;;
+    font-size:14px;
+    height:14px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#page .extendedSearch select {
+    height: 18px;
+}
+
+
+/* begin css tabs */
+
+ul#tabnav { /* general settings */
+text-align: right; /* set to left, right or center */
+margin: 1em 0 1em 0; /* set margins as desired */
+font: bold 11px verdana, arial, sans-serif; /* set font as desired */
+border-bottom: 1px solid #4c4c4c; /* set border COLOR as desired */
+list-style-type: none;
+padding: 3px 10px 3px 10px; /* THIRD number must change with respect to padding-top (X) below */
+}
+
+ul#tabnav li { /* do not change */
+display: inline;
+}
+
+#tab1 li.tab1, #tab2 li.tab2, #tab3 li.tab3, #tab4 li.tab4 { /* settings for selected tab */
+border-bottom: 1px solid #fff; /* set border color to page background color */
+background-color: #fff; /* set background color to match above border color */
+}
+
+#tab1 li.tab1 a, #tab2 li.tab2 a, #tab3 li.tab3 a, #tab4 li.tab4 a { /* settings for selected tab link */
+background-color: #fff; /* set selected tab background color as desired */
+color: #000; /* set selected tab link color as desired */
+position: relative;
+top: 1px;
+padding-top: 4px; /* must change with respect to padding (X) above and below */
+}
+
+ul#tabnav li a { /* settings for all tab links */
+padding: 3px 4px; /* set padding (tab size) as desired; FIRST number must change with respect to padding-top (X) above */
+border: 1px solid #4c4c4c; /* set border COLOR as desired; usually matches border color specified in #tabnav */
+background-color: #ececec; /* set unselected tab background color as desired */
+color: #666; /* set unselected tab link color as desired */
+margin-right: 0px; /* set additional spacing between tabs as desired */
+text-decoration: none;
+border-bottom: none;
+}
+
+ul#tabnav a:hover { /* settings for hover effect */
+background: #fff; /* set desired hover color */
+}
+
+
+ul#patternActionNav {
+    list-style-image: url(../images/li.png);
+}
+
+
+ul#patternActionNav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+ul#patternActionNav a:hover {
+    text-decoration: underline;
+}
+
+#view li.view, #editPattern li.editPattern, #editDescription li.editDescription, #delete li.delete {
+    display:none;
+}
+
+ul#patternActionNav li.delete {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.tooltip {
+  position: absolute;
+  display: none;
+  background-color: #FFFFFF;
+  border: 1px solid #009024;
+  font-size: 10px;
+  padding: 5px;
+}
+
+.tooltip h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    font-weight: bold;
+    color: #009024;
+}
+
+.inlinesearch div {
+    width: 300px;
+}
+
+div.inlinesearch, .inlinesearch > div, .inlinesearch > ul {
+    width: 488px;
+}
+
+.inlinesearch em {
+    background-color: yellow;
+    font-style: italic;
+}
+
+
+.inlinesearch .link {
+    text-decoration: none;
+    display:inline-block;
+    border:1px solid #666;
+    margin: 1px;
+    width:22px;
+    height:22px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.inlinesearch .link a{
+    text-decoration: none;
+    color: #48a659;
+    font-size: 12px;
+}
+
+.inlinesearch a{
+    text-decoration: none;
+    color: #48a659;
+    font-size: 12px;
+}
+
+.inlinesearch .link a:hover{
+    color: #000;
+    text-decoration: underline;
+}
+
+.inlinesearch span.searchinfo {
+    font-size: 9px;
+    color: #4c4c4c;
+}
+
+.inlinesearch div.paginator {
+    width: 75px;
+    float: right;
+}
+
+.templateDescription {
+    font-size: 10px;
+    color: #4c4c4c;
+}
+
+#page textarea.pastebox {
+    height: 400px;
+    width: 100%;
+    padding: 10px;
+}

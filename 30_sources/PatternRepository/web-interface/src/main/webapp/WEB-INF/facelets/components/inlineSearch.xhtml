@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <ice:inputText value="#{inlineSearchHelper.searchString}" style="width:360px" id="selectPatternsearch"/>&#160;
+    <ice:commandButton actionListener="#{inlineSearchHelper.search}" value="Search" />
+
+    <small>"",NOT,AND,OR,*,?,~</small>
+
+    <br /><br />
+
+    <ice:panelGroup rendered="#{inlineSearchHelper.count > 0}" styleClass="inlinesearch">
+        <ul>
+            <ui:repeat value="#{inlineSearchHelper.results}" var="result">
+                <li>
+                <ice:commandLink actionListener="#{bean[callback]}" partialSubmit="true" value="#{result.name}" onmouseover="showTooltip('tt_#{result.id}')" onmouseout="hideTooltip()">
+                    <f:attribute name="PATTERNID" value="#{result.id}" />
+                </ice:commandLink>
+                <div id="tt_#{result.id}" class="tooltip">
+                    <h1>#{result.name}</h1>
+                    <ui:repeat value="#{result.highlighted}" var="hightlight">
+                        <div><h:outputText value="#{hightlight}" escape="false" /></div>
+                    </ui:repeat>
+                </div>
+                </li>
+            </ui:repeat>
+        </ul>
+        <div class="right">
+            <span class="searchinfo">#{inlineSearchHelper.count} Patterns found. Page #{inlineSearchHelper.currentPage} of #{inlineSearchHelper.pageCount}&#160;</span>
+            <ice:panelGroup styleClass="paginator" rendered="#{inlineSearchHelper.pageCount > 1}">
+                <ice:panelGroup styleClass="link #{inlineSearchHelper.previousPageAvailable?'':'hidden'}">
+                    <ice:commandLink value="&#171;" actionListener="#{inlineSearchHelper.prev}" />
+                </ice:panelGroup>
+                <ice:panelGroup styleClass="link #{inlineSearchHelper.nextPageAvailable?'':'hidden'}">
+                    <ice:commandLink value="&#187;" actionListener="#{inlineSearchHelper.next}" />
+                </ice:panelGroup>
+            </ice:panelGroup>
+        </div>
+    </ice:panelGroup>
+    <ice:panelGroup rendered="#{inlineSearchHelper.count == 0}">
+        #{common['page.search.noResultsFound']}
+    </ice:panelGroup>
+
+
+
+</ui:composition>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="wizard/basic.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="edit.xhtml" x="360" y="32" zoom="true"/>
+        <Node id="wizard/relationships.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="editCommon.xhtml" x="2970" y="149" zoom="false"/>
+        <Node id="view.xhtml" x="1151" y="32" zoom="true"/>
+        <Node id="wizard/pastebox.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="*" x="1389" y="32" zoom="true"/>
+        <Node id="wizard/matching.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="fileFrame.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="forward.jsp" x="3275" y="32" zoom="true"/>
+        <Node id="wizard/forcesandconsequences.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="error.xhtml" x="4043" y="32" zoom="true"/>
+        <Node id="wizard/formatting.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="editVersion.xhtml" x="4533" y="32" zoom="true"/>
+        <Node id="search.xhtml" x="4283" y="32" zoom="true"/>
+        <Node id="learnMore.xhtml" x="3516" y="32" zoom="true"/>
+        <Node id="addTemplate.xhtml" x="2460" y="32" zoom="true"/>
+        <Node id="browseByCategory.xhtml" x="34" y="32" zoom="true"/>
+        <Node id="add.xhtml" x="2751" y="32" zoom="true"/>
+        <Node id="welcome.xhtml" x="887" y="32" zoom="true"/>
+        <Node id="browse.xhtml" x="3788" y="32" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

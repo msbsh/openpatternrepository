@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <f:view xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:ice="http://www.icesoft.com/icefaces/component"
+            xml:lang="en">
+
+        <h:head>
+            <base href="#{baseCtrl.baseHREF}" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>#{common['page.title']}<ui:insert name="pagetitle">PAGETITLE</ui:insert></title>
+            <link rel="stylesheet" type="text/css" href="css/style.css" />
+            <link rel="stylesheet" type="text/css" href="css/layout.css" />
+            <link rel="icon" href="images/icon.png" type="image/png" />
+            <script type="text/javascript" src="lib/jquery/jquery-1.5.1.min.js"></script>
+            <script type="text/javascript" src="lib/uiscripts.js"></script>
+
+        <ui:insert name="head">
+        </ui:insert>
+        
+        </h:head>
+        <h:body>
+
+        <div id="header">
+            <div class="hseperator"></div>
+            <div id="logo">
+                <img src="images/logo.png" alt="Open Pattern Repository" title="Logo of the Open Pattern Repository" />
+            </div>
+            <div id="navigation">
+                <ui:include src="menu.xhtml" />
+            </div>
+            <ul id="shortlinks">
+                <li>
+                    <a href="search.iface"><img src="images/search.png" id="toggle_quicksearch" alt="Search" title="Search" /></a>
+                </li>
+                <li>
+                    <a href="browse.iface"><img src="images/archiv.png" id="toggle_archiv" alt="Browse" title="Browse" /></a>
+                </li>
+                <li>
+                    <a href=""><img src="images/rss.png" alt="Stay up-to-date" title="Stay up-to-date" /></a>
+                </li>
+            </ul>
+        </div>
+        <div id="page">
+            <ui:insert name="page">
+                <div id="content">
+                    <div id="toc">
+                        <div class="hideArrow" ></div>
+                        <span class="title">Contents</span>
+                        <ul>
+                            <li>Introduction</li>
+                            <li>Intent</li>
+                            <li>Motivation</li>
+                            <li>Applicability</li>
+                            <li>Strcuture</li>
+                            <li>Participants</li>
+                            <li>Collaboration</li>
+                            <li>Consequences</li>
+                            <li>Implementation</li>
+                            <li>Known Uses</li>
+                            <li>Related Patters</li>
+                        </ul>
+                    </div>
+                    <h1>A web-pattern: The wizard pattern</h1>
+                    <h2>Introduction</h2>
+                    <p>It was hard to find the right level of abstraction with respect to describing a web- pattern. A pattern should uphold a high level of abstraction and be generic in its applicability. This itself posses a problem for developing patterns for the web- programming domain.
+                        To exemplify, Object-oriented programming can be used in any domain. The development of web-patterns needs to be a level of abstraction away from this programming. Web-patterns need to describe ways to solve problems in web- development. On the other hand the object-oriented paradigm has been fully adopted and integrated in most – if not all – web-programming languages.</p><p>
+                        This led me to consider the following: Developing patterns for a domain should limit a patterns usefulness to the high level concepts that are applicable to that domain. Although most web-programming languages are object-oriented, web-programming is still a very specific area. Therefore patterns developed for this domain will also be fairly specific. As a result describing the wizard pattern as a web based pattern imposes a restriction on the level of abstraction. The pattern has been described using the GOF[GOF+94] format.</p>
+                    <h2>Intent</h2>
+                    <p>The wizard pattern guides the user through a complex task by decomposing the task into a set of manageable subtasks.</p>
+                    <h2>Motivation</h2>
+                    <p>Online shops and traveling agencies offer services and products via the Internet. For instance a traveling agency offers flights and vacations and a shop electronics or books etc. The intend of these online shops is to make purchases easier and faster, allowing people to do this from the comforts of their home.
+                        Unfortunate the solution for integrating the ‘shop’ principle into a web based environment is far from easy. The entire process of purchasing a service or a product via the Internet is often time consuming and difficult. This is mainly due to the fact that it is a complex task to make a complete transaction regarding a service or product. Presenting the user with the entire task at once makes the process of completing the task difficult and more error prone. To avoid making any errors the process often becomes unnecessarily time consuming.</p><p>
+                        Next to user related issues one has to deal with domain specific concerns like security, stateless connections and data integrity. Although security and data integrity aren’t really domain specific the constraint of stateless connections makes them specific to the domain of web based applications.
+                        The wizard pattern describes how such a complex task can be decomposed into smaller – more simpler – subtasks. The user is only confronted with the currently relevant subtask. Since such a task contains only a small portion of the actual tasks data it is less complex and therefore less error prone, making it easier to successfully complete the subtask. Next to this a user can also (when implemented correctly) view its progress with respect to the other subtasks. Thereby giving the user an idea of how far they are from completing the entire task. </p>
+                </div>                
+                <div id="sidebar">
+                    <ul class="info">
+                        <li>
+                            <div class="header"><img src="images/info.png" alt="Information" /></div>
+                            <div class="text">
+                                <table>
+                                    <tr>
+                                        <td colspan="2"><b>Wizard pattern</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 8em;"><b>Version</b></td><td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Published</b></td><td>10-15-2009</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Publisher</b></td><td>anonymous</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>License</b></td><td>Creative Commons 2.0 <img src="images/creativeCommons.png" alt="nc by sa" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Source</b></td><td>Michel de Jong<br />Departement of Computer Science<br />University of Groningen</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header"><img src="images/categories.png" alt="Information" /></div>
+                            <div class="text">RUG > Web-patterns > Creational Patterns</div>
+                        </li>
+                        <li>
+                            <div class="header"><img src="images/tags.png" alt="Information" /></div>
+                            <div class="text"></div>
+                        </li>
+                        <li>
+                            <div class="header"><img src="images/impact.png" alt="Information" /></div>
+                            <div class="text"></div>
+                        </li>
+                    </ul>
+
+                    <h2>Comments</h2>
+
+                    <ul class="comments">
+                        <li>
+                            <div class="header">
+								cm<br />
+                                <span class="date">12-2-09</span>
+                            </div>
+                            <div class="text">Adding and replacing of steps is easy. It merely requires defining a class that inherits from the ParentalStep class and implementing the enter() method. Other methods can also be overridden but it isn’t required since the ParentalStep already defines default behavior for those methods. Thus newly defined classes work automatically with existing structures. This increases the modifiability of the system.</div>
+                        </li>
+                        <li  class="children">
+                            <div class="header">
+				                someone<br />
+                                <span class="date">12-2-09</span>
+                            </div>
+                            <div class="text">It separates the implementation of the pattern from the rest of the system. This increases maintainability of the system.</div>
+                        </li>
+                        <li class="children">
+                            <div class="header">
+				                someoneelse<br />
+                                <span class="date">12-2-09</span>
+                            </div>
+                            <div class="text">ack.</div>
+                        </li>
+                        <li>
+                            <div class="header">
+								anonymous<br />
+                                <span class="date">12-2-09</span>
+                            </div>
+                            <div class="text">The steps invoke default functionality from the ParentalStep. Invocation of a method of the ParentalStep can also come directly from the wizard, since some steps don’t require additional implementation for a method.</div>
+                        </li>
+                    </ul>
+
+                </div>
+            </ui:insert>
+        </div>
+        <div id="footer">
+            <hr style="height: 1px; border-top: 1px;"/>
+            If you have questions or comments regarding the Open Pattern Repository, please address them to uwe@vanheesch.net. Also visit our group-website at http://www.cs.rug.nl/search/.
+        </div>
+        </h:body>
+        </f:view>
+    </html>
+

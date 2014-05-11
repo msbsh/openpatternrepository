@@ -1,0 +1,117 @@
+<ui:composition template="../WEB-INF/inc/wizard.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+
+    <ui:define name="pagetitle">
+        Select and match
+    </ui:define>
+
+
+    <ui:define name="wizardstep">
+        <script type="text/javascript" src="lib/sendselection.js"></script>
+
+
+
+        <div id="content" class="fanPanel">
+            <h2>#{form['label.pastebox']}</h2>
+
+            <div id="pasteContent" >
+                <div style="padding: 10px; overflow:scroll;">
+                    <ice:outputText value="#{func:wiki2html(addWizardController.paste)}" escape="false" nospan="true"/>
+                </div>
+            </div>
+        </div>
+        <!--            </div>-->
+        <div id="sidebar">
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            <b><ice:outputText value="#{help['pattern.add.common.paste']}" escape="false" /></b><br />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <h1><ice:outputText value="#{matchingStep.wizard.pattern.name}" /></h1>
+            <ice:inputHidden value="#{matchingStep.selection}" id="selection" />
+            <table width="100%" style="margin-left: -20px;">
+                <tr>
+                    <td width="150px">
+                <ice:panelBorder id="draggablePnlPop"
+                                 style="background-color: lightgray;border: 2px solid #48a659; float:left; margin: 0px 10px 10px 0px;">
+                    <f:facet name="north">
+                        <ice:panelGroup styleClass="popupHeaderWrapper" style="background-color: gray; margin-bottom: 10px; color: white;font: 10px/1.5em erdama, sans-serif; padding: 2px;width: 100%;">
+                            <ice:outputText
+                                value="Select Element"
+                                styleClass="popupHeaderText"/>
+                        </ice:panelGroup>
+                    </f:facet>
+                    <f:facet name="center">
+
+                        <ice:panelGroup styleClass="popupBody center" style="text-align: center;">
+                            <ice:panelSeries value="#{matchingStep.template.textComponents}" var="cp">
+                                <ice:commandButton value="#{cp.name}" actionListener="#{matchingStep.moveTo}" style="margin-bottom: 2px; margin-left: 10px;margin-right: 10px;">
+                                    <f:attribute name="identifier" value="#{cp.identifier}" />
+                                </ice:commandButton><br />
+                            </ice:panelSeries>
+                            <hr />
+                            <ice:commandButton value="#{matchingStep.template.forces.name}" style="margin-bottom: 2px;" actionListener="#{matchingStep.addForce}" rendered="#{matchingStep.template.forces!=null}" /> <br />
+                            <ice:commandButton value="#{matchingStep.template.consequenceList.name}" style="margin-bottom: 2px;" actionListener="#{matchingStep.addConsequence}" rendered="#{matchingStep.template.consequenceList!=null}" /> <br />
+                            <hr />
+
+                            <ice:commandButton value="undo"
+                                               style="margin-bottom: 2px;"
+                                               actionListener="#{matchingStep.undo}" /><br />
+                            <br />
+                        </ice:panelGroup>
+
+                    </f:facet>
+                </ice:panelBorder>
+                </td>
+                <td>
+                    <div>
+                        <ice:panelSeries value="#{matchingStep.template.textComponents}" var="cp" style="font-size: 0.875em;margin-right: 2em;line-height: 1.5em;">
+                            <ice:panelSeries value="#{matchingStep.blocks[cp.identifier]}" var="block">
+                                <ice:portlet style="margin-bottom: 20px;">
+                                    <h2>
+                                        <ice:outputText value="#{cp.name}" nospan="true" />
+                                    </h2>
+                                    <ice:outputText value="#{func:wiki2html(block.text)}" nospan="true" escape="false" />
+                                </ice:portlet>
+                            </ice:panelSeries>
+                        </ice:panelSeries>
+
+                        <ice:portlet style="margin-bottom: 20px;" rendered="#{matchingStep.template.forces!=null}">
+                            <h2><b><ice:outputText value="#{matchingStep.template.forces.name}" nospan="true" /></b></h2>
+                            <ice:panelSeries value="#{matchingStep.forces}" var="force" style="font-size: 0.875em;margin-right: 2em;line-height: 1.5em;">
+                                <ul>
+                                    <li>#{force.description}</li>
+                                </ul>
+                            </ice:panelSeries>
+                        </ice:portlet>
+
+                        <ice:portlet style="margin-bottom: 20px;" rendered="#{matchingStep.template.consequenceList!=null}">
+                            <h2><b><ice:outputText value="#{matchingStep.template.consequenceList.name}" nospan="true" /></b></h2>
+                            <ice:panelSeries value="#{matchingStep.consequences}" var="consequence" style="font-size: 0.875em;margin-right: 2em;line-height: 1.5em;">
+                                <ul>
+                                    <li>#{consequence.description}</li>
+                                </ul>
+                            </ice:panelSeries>
+                        </ice:portlet>
+                    </div>
+                </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

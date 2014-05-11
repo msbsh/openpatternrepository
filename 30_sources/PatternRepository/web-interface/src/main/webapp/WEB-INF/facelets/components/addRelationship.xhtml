@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags">
+
+    <tr>
+        <td>Pattern</td>
+        <td>#{selectedPattern.name}</td>
+    </tr>
+
+    <tr><td colspan="2"><hr /></td></tr>
+
+    <tr>
+        <td>Description</td>
+        <td><ice:inputText value="#{description}" /></td>
+</tr>
+
+<tr><td colspan="2"><hr /></td></tr>
+
+<tr>
+    <td>Type</td>
+    <td>
+<ice:selectOneListbox value="#{relationshipType}"  size="1">
+    <f:convertNumber integerOnly="true" />
+    <f:selectItem itemValue="0" itemLabel="Alternative" />
+    <f:selectItem itemValue="1" itemLabel="Combination" />
+    <f:selectItem itemValue="2" itemLabel="Variant" />
+    <f:selectItem itemValue="3" itemLabel="Belongs to" />
+</ice:selectOneListbox>
+</td>
+</tr>
+
+</ui:composition>

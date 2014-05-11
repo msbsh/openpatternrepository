@@ -1,0 +1,206 @@
+<ui:composition template="../WEB-INF/inc/wizard.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+    <ui:define name="pagetitle">
+        Add a pattern
+    </ui:define>
+
+    <ui:param name="noPreviouspage" value="true" />
+    
+
+    <ui:define name="wizardstep">
+    <div id="content">
+        <h2><h:outputText value="#{common['page.pattern.add.step.common']}" /></h2>
+        <table>
+            <tr><td colspan="2"><hr /></td></tr>
+            <tr>
+                <td>
+            <h:outputLabel for="name" value="#{form['label.name']}">
+                <span class="required">#{form['constraint.required']}</span>
+            </h:outputLabel>
+                </td>
+            <td>
+            <ice:inputText label="#{form['label.name']}" 
+                           title="#{help['pattern.add.common.name.tooltip']}"
+                           value="#{addWizardController.pattern.name}"
+                           id="name"
+                           tabindex="1"
+                           required="true"
+                           partialSubmit="true">
+                <f:validateLength maximum="255" />
+                <f:validator validatorId="RegexValidator" />
+                <f:attribute name="inputCharset" value="A-Za-z0-9-: " />
+            </ice:inputText>
+            </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <small>
+                        #{form['constraint.maxlength']} 255,
+                        #{form['constraint.inputCharset']} [a-z0-9-: ]
+                    </small>
+                </td>
+            </tr>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td><h:outputLabel for="uniqueName" value="#{form['label.uniqueName']}"><span class="required">#{form['constraint.required']}</span></h:outputLabel></td>
+            <td>
+            <ice:inputText label="#{form['label.uniqueName']}"
+                           title="#{help['pattern.add.common.wiki.tooltip']}"
+                           value="#{addWizardController.pattern.uniqueName}"
+                           id="uniqueName"
+                           tabindex="2"
+                           required="true"
+                           partialSubmit="true">
+                <f:validateLength maximum="255" />
+                <f:validator validatorId="WikiNameValidator" />
+                <f:validator validatorId="RegexValidator" />
+                <f:attribute name="inputCharset" value="A-Za-z0-9_()" />
+            </ice:inputText>
+            </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <small>
+                        #{form['constraint.unique']},
+                        #{form['constraint.maxlength']} 255,
+                        #{form['constraint.inputCharset']} [a-z0-9_()]
+                    </small>
+                </td>
+            </tr>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+
+            <tr>
+                <td><h:outputLabel for="source" value="#{form['label.source']}" /></td>
+            <td>
+            <ice:inputText value="#{addWizardController.patternVersion.source}"
+                           title="#{help['pattern.add.common.source.tooltip']}"
+                           id="source"
+                           tabindex="3"
+                           partialSubmit="true">
+                <f:validateLength maximum="255" />
+            </ice:inputText>
+            </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <small>
+                        #{form['constraint.maxlength']} 255
+                    </small>
+                </td>
+            </tr>
+
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td><h:outputLabel for="license" value="#{form['label.license']}"><span class="required">#{form['constraint.required']}</span></h:outputLabel></td>
+            <td>
+            <ice:selectOneListbox label="#{form['label.license']}"
+                                  title="#{help['pattern.add.common.license.tooltip']}"
+                                  size="1"
+                                  converter="licenseConverter"
+                                  value="#{addWizardController.patternVersion.license}"
+                                  id="license"
+                                  tabindex="4"
+                                  required="true"
+                                  partialSubmit="true">
+                <f:selectItem itemValue="" itemLabel="#{form['selectBox.pleaseSelect']}" />
+                <f:selectItems value="#{license.licenseSelectItems}" />
+            </ice:selectOneListbox>
+            </td>
+            </tr>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td><h:outputLabel for="template"  value="#{form['label.template']}" ><span class="required">#{form['constraint.required']}</span></h:outputLabel></td>
+            <td>
+            <ice:selectOneListbox label="#{form['label.template']}"
+                                  title="#{help['pattern.add.common.template.tooltip']}"
+                                  size="1"
+                                  converter="templateConverter"
+                                  value="#{addWizardController.patternVersion.template}"
+                                  id="template"
+                                  tabindex="5"
+                                  partialSubmit="true"
+                                  required="true">
+                <f:selectItem itemValue="" itemLabel="#{form['selectBox.pleaseSelect']}" />
+                <f:selectItems value="#{template.templateSelectItems}" />
+            </ice:selectOneListbox><br />
+            <ice:panelGroup rendered="#{addWizardController.patternVersion.template!=null}" styleClass="templateDescription">
+            #{addWizardController.patternVersion.template.description}
+                <ul>
+            <ui:repeat value="#{addWizardController.patternVersion.template.components}" var="comp">
+                <li>#{comp.name}<ice:outputText styleClass="required" rendered="#{comp.mandatory}">#{form['constraint.required']}</ice:outputText></li>
+            </ui:repeat>
+                </ul>
+                </ice:panelGroup>
+            </td>
+            </tr>
+
+            <tr><td colspan="2"><hr /></td></tr>
+
+            <tr>
+                <td><h:outputLabel for="categorySelector" value="#{form['label.categories']}"/></td>
+            <td>
+            <ice:selectOneListbox label="#{form['label.categories']}"
+                                  title="#{help['pattern.add.common.category.tooltip']}"
+                                  converter="categoryConverter"
+                                  size="1"
+                                  id="categorySelector"
+                                  tabindex="6"
+                                  partialSubmit="true"
+                                  valueChangeListener="#{basicStep.addCategory}">
+                <f:selectItem itemValue="" itemLabel="#{form['selectBox.pleaseSelect']}" />
+                <f:selectItems value="#{category.categorySelectItems}" />
+            </ice:selectOneListbox>
+            </td>
+            </tr>
+
+
+            <tr>
+                <td></td>
+                <td><br />
+            <opr:categoryList categories="#{addWizardController.pattern.categories}" bean="#{basicStep}" removeCallback="removeCategory" />
+            </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="sidebar">
+        <div id="help">
+            <ul class="info">
+                <li class="messages">
+                    <div class="header"></div>
+                    <div class="text">
+                        <ice:messages layout="list" errorClass="error" warnClass="warning" fatalClass="fatal" infoClass="information" />
+                    </div>
+                </li>
+                <li>
+                    <div class="header">
+                        <img src="images/info.png" alt="information" />
+                    </div>
+                    <div class="text">
+                        <b>#{help['pattern.add.common.info.headline']}</b><br />
+                        <h:outputText value="#{help['pattern.add.common.info.content']}" escape="false" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    </ui:define>
+
+</ui:composition>

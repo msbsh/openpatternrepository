@@ -1,0 +1,44 @@
+<ui:composition template="../WEB-INF/inc/wizard.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+
+    <ui:define name="pagetitle">
+        Pastebox
+    </ui:define>
+
+
+    <ui:define name="wizardstep">
+
+        <div id="content" class="fanPanel">
+            <h2>#{form['label.pastebox']}</h2>
+
+            <ice:inputTextarea
+                id="pastebox"
+                title="#{help['pattern.add.common.pastebox.tooltip']}"
+                value="#{addWizardController.paste}"
+                partialSubmit="true"
+                styleClass="pastebox" />
+
+        </div>
+        <div id="sidebar">
+            <div id="help">
+                <ul class="info">
+                    <li>
+                        <div class="header">
+                            <img src="images/info.png" alt="information" />
+                        </div>
+                        <div class="text">
+                            #{help['pattern.add.common.pastebox.tooltip']}<br />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

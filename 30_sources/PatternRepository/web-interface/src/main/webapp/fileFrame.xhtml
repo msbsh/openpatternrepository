@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+    Document   : fileFrame
+    Created on : 03.12.2010, 12:40:07
+    Author     : gauner
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      >
+    <script type="text/javascript" src="lib/jquery/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript">
+    jQuery(function() {
+        ice.onAfterUpdate(postUpdateHandler);
+    });
+
+    var postUpdateHandler = function(updates) {
+        top.reloadFiles()
+    };
+    </script>
+    <h:head>
+        <title>File Upload</title>
+        <style type="" >label { float: left; display: block; width: 75px; }</style>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/layout.css" />
+    </h:head>
+    <h:body>
+        <h:form id="fileform">
+            <h:outputLabel for="file">File:</h:outputLabel>
+            <ace:fileEntry id="fileEntryComp"
+                           label="File Entry"
+                           relativePath="uploaded"
+                           fileEntryListener="#{uploadHelper.listener}"/>
+            <br />
+            <h:commandButton value="Upload" action="SUBMIT" /><br />
+            <h:outputText value="Supported Filetypes: #{uploadHelper.supportedFileTypes}" /><br />
+            <h:outputText value="Maximum file size: #{uploadHelper.maximumFileSize} MB." />
+            <h:messages id="messages" />
+
+        </h:form>
+    </h:body>
+</html>

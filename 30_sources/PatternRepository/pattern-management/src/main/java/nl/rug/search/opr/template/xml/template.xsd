@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+            jxb:version="2.0">
+
+    <xsd:element name="template">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="author" type="xsd:string" />
+                <xsd:element name="mappings" minOccurs="0">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="mapping" type="XMLMapping" minOccurs="0" maxOccurs="unbounded" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="XMLComponent">
+        <xsd:sequence>
+            <xsd:element name="reference" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="XMLMapping">
+        <xsd:all>
+            <xsd:element name="description" type="xsd:string" />
+            <xsd:element name="name" type="xsd:string"  minOccurs="1" />
+            <xsd:element name="identifier" type="xsd:string"  minOccurs="1" />
+            <xsd:element name="mandatory" type="xsd:boolean" default="0" />
+            <xsd:element name="type" type="XMLType"  minOccurs="1" />
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:simpleType name="XMLType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PROBLEM" />
+            <xsd:enumeration value="CONTEXT" />
+            <xsd:enumeration value="SOLUTION" />
+            <xsd:enumeration value="DESCRIPTION" />
+            <xsd:enumeration value="FORCES" />
+            <xsd:enumeration value="CONSEQUENCES" />
+            <xsd:enumeration value="RELATIONSHIP" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+                
+</xsd:schema>

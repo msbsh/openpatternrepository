@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>FileServlet.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\DATEN\Projects\Studium\openpatternrepository\30_sources\PatternRepository\web-interface\src\main\java\nl\rug\search\opr\FileServlet.java</td></tr></table>
+<pre>
+<span class="line-number"> 14</span> 
+<span class="line-number"> 15</span> <span class="comment">/**</span>
+<span class="line-number"> 16</span> <span class="comment"> *</span>
+<span class="line-number"> 17</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">cm</span>
+<span class="line-number"> 18</span>  <span class="comment">*/</span>
+<span class="line-number"> 19</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> FileServlet <span class="keyword-directive">extends</span> HttpServlet {
+<span class="line-number"> 20</span> 
+<span class="line-number"> 21</span>     <span class="comment">/**</span> 
+<span class="line-number"> 22</span> <span class="comment">     * </span><span class="comment">Processes</span> <span class="comment">requests</span> <span class="comment">for</span> <span class="comment">both</span> <span class="comment">HTTP</span> <span class="ST0">&lt;code&gt;</span><span class="comment">GET</span><span class="ST0">&lt;/code&gt;</span> <span class="comment">and</span> <span class="ST0">&lt;code&gt;</span><span class="comment">POST</span><span class="ST0">&lt;/code&gt;</span> <span class="comment">methods</span><span class="comment">.</span>
+<span class="line-number"> 23</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">request</span> <span class="comment">servlet</span> <span class="comment">request</span>
+<span class="line-number"> 24</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">response</span> <span class="comment">servlet</span> <span class="comment">response</span>
+<span class="line-number"> 25</span> <span class="comment">     * </span><span class="ST0">@throws</span> <span class="comment">ServletException</span> <span class="comment">if</span> <span class="comment">a</span> <span class="comment">servlet</span><span class="comment">-</span><span class="comment">speci</span><span class="comment">fic</span> <span class="comment">error</span> <span class="comment">occurs</span>
+<span class="line-number"> 26</span> <span class="comment">     * </span><span class="ST0">@throws</span> <span class="comment">IOException</span> <span class="comment">if</span> <span class="comment">an</span> <span class="comment">I</span><span class="comment">/</span><span class="comment">O</span> <span class="comment">error</span> <span class="comment">occurs</span>
+<span class="line-number"> 27</span>      <span class="comment">*/</span>
+<span class="line-number"> 28</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> Logger logger = Logger.getLogger(FileServlet.<span class="keyword-directive">class</span>.getName());
+<span class="line-number"> 29</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> String FILE_DIRECTORY = <span class="character">&quot;</span><span class="character">opr.FILE_DIRECTORY</span><span class="character">&quot;</span>;
+<span class="line-number"> 30</span> 
+<span class="line-number"> 31</span>     @EJB
+<span class="line-number"> 32</span>     <span class="keyword-directive">private</span> FileLocal fb;
+<span class="line-number"> 33</span> 
+<span class="line-number"> 34</span>     <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> processRequest(HttpServletRequest request, HttpServletResponse response)
+<span class="line-number"> 35</span>             <span class="keyword-directive">throws</span> ServletException, IOException {
+<span class="line-number"> 36</span> 
+<span class="line-number"> 37</span>         OutputStream os = <span class="keyword-directive">null</span>;
+<span class="line-number"> 38</span>         <span class="keyword-directive">try</span> {
+<span class="line-number"> 39</span>         String requestedFile = request.getPathInfo().substring(1);
+<span class="line-number"> 40</span>         String filename = requestedFile;
+<span class="line-number"> 41</span> 
+<span class="line-number"> 42</span>         <span class="keyword-directive">int</span> size = -1;
+<span class="line-number"> 43</span>         <span class="keyword-directive">boolean</span> scaleCubic = <span class="keyword-directive">false</span>;
+<span class="line-number"> 44</span>         <span class="keyword-directive">if</span> (requestedFile.matches(<span class="character">&quot;</span><span class="character">(xy)?[1-9][0-9]*px-.*</span><span class="character">&quot;</span>)) {
+<span class="line-number"> 45</span> 
+<span class="line-number"> 46</span>             <span class="keyword-directive">if</span> (requestedFile.startsWith(<span class="character">&quot;</span><span class="character">xy</span><span class="character">&quot;</span>)) {
+<span class="line-number"> 47</span>                 scaleCubic = <span class="keyword-directive">true</span>;
+<span class="line-number"> 48</span>                 requestedFile = requestedFile.substring(2);
+<span class="line-number"> 49</span>             }
+<span class="line-number"> 50</span> 
+<span class="line-number"> 51</span>             String[] parts = requestedFile.split(<span class="character">&quot;</span><span class="character">px-</span><span class="character">&quot;</span>);
+<span class="line-number"> 52</span>             <span class="keyword-directive">try</span> {
+<span class="line-number"> 53</span>                 size = Integer.parseInt(parts[0]);
+<span class="line-number"> 54</span>             } <span class="keyword-directive">catch</span> (NumberFormatException ex) {
+<span class="line-number"> 55</span>                 size = -1;
+<span class="line-number"> 56</span>             }
+<span class="line-number"> 57</span> 
+<span class="line-number"> 58</span>             <span class="keyword-directive">if</span>(parts.length == 2) {
+<span class="line-number"> 59</span>                 filename = parts[1];
+<span class="line-number"> 60</span>             }
+<span class="line-number"> 61</span>         }
+<span class="line-number"> 62</span> 
+<span class="line-number"> 63</span>         <span class="keyword-directive">long</span> id;
+<span class="line-number"> 64</span>         <span class="keyword-directive">try</span> {
+<span class="line-number"> 65</span>             id = Long.parseLong(filename);
+<span class="line-number"> 66</span>         } <span class="keyword-directive">catch</span> (NumberFormatException e) {
+<span class="line-number"> 67</span>             response.sendError(404);
+<span class="line-number"> 68</span>             <span class="keyword-directive">return</span>;
+<span class="line-number"> 69</span>         }
+<span class="line-number"> 70</span> 
+<span class="line-number"> 71</span>         File file = fb.getById(id);
+<span class="line-number"> 72</span> 
+<span class="line-number"> 73</span> 
+<span class="line-number"> 74</span>         <span class="keyword-directive">if</span> (file == <span class="keyword-directive">nu</span><span class="keyword-directive">ll</span>) {
+<span class="line-number"> 75</span>             response.sendError(404);
+<span class="line-number"> 76</span>             <span class="keyword-directive">return</span>;
+<span class="line-number"> 77</span>         }
+<span class="line-number"> 78</span> 
+<span class="line-number"> 79</span>         response.setContentType(file.getMime());
+<span class="line-number"> 80</span>         response.addHeader(<span class="character">&quot;</span><span class="character">Content-Disposition</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">filename=</span><span class="character">&quot;</span>+ file.getName() +<span class="character">&quot;</span><span class="character">;</span><span class="character">&quot;</span>);
+<span class="line-number"> 81</span>         os = response.getOutputStream();
+<span class="line-number"> 82</span> 
+<span class="line-number"> 83</span> 
+<span class="line-number"> 84</span>         <span class="keyword-directive">if</span> (size &gt; 0 &amp;&amp; file != <span class="keyword-directive">null</span>) {
+<span class="line-number"> 85</span> 
+<span class="line-number"> 86</span>             <span class="keyword-directive">byte</span>[] bytes;
+<span class="line-number"> 87</span>             <span class="keyword-directive">if</span>( (bytes = fb.getThumbnail(file, size, scaleCubic)) != <span class="keyword-directive">null</span>) {
+<span class="line-number"> 88</span>                 os.write(bytes);
+<span class="line-number"> 89</span>             }
+<span class="line-number"> 90</span> 
+<span class="line-number"> 91</span>             <span class="keyword-directive">return</span>;
+<span class="line-number"> 92</span>         }
+<span class="line-number"> 93</span> 
+<span class="line-number"> 94</span> 
+<span class="line-number"> 95</span>         os.write(file.getContent());
+<span class="line-number"> 96</span> 
+<span class="line-number"> 97</span>         <span class="keyword-directive">re</span><span class="keyword-directive">turn</span>;
+<span class="line-number"> 98</span> 
+<span class="line-number"> 99</span>         } <span class="keyword-directive">finally</span> {
+<span class="line-number">100</span>             <span class="keyword-directive">try</span> {
+<span class="line-number">101</span>                 os.close();
+<span class="line-number">102</span>             } <span class="keyword-directive">catch</span>(Exception ex) {
+<span class="line-number">103</span>                 logger.log(Level.SEVERE, <span class="keyword-directive">null</span>, ex);
+<span class="line-number">104</span>             }
+<span class="line-number">105</span>         }
+<span class="line-number">106</span> 
+<span class="line-number">107</span>     }
+<span class="line-number">108</span> 
+<span class="line-number">109</span>     <span class="comment">// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;HttpServlet methods. Click on the + sign on t</span><span class="comment">he left to edit the code.&quot;&gt;</span>
+<span class="line-number">110</span>     <span class="comment">/**</span> 
+<span class="line-number">111</span> <span class="comment">     * </span><span class="comment">Handles</span> <span class="comment">the</span> <span class="comment">HTTP</span> <span class="ST0">&lt;code&gt;</span><span class="comment">GET</span><span class="ST0">&lt;/code&gt;</span> <span class="comment">method</span><span class="comment">.</span>
+<span class="line-number">112</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">request</span> <span class="comment">servlet</span> <span class="comment">request</span>
+<span class="line-number">113</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">response</span> <span class="comment">servlet</span> <span class="comment">r</span><span class="comment">esponse</span>
+<span class="line-number">114</span> <span class="comment">     * </span><span class="ST0">@throws</span> <span class="comment">ServletException</span> <span class="comment">if</span> <span class="comment">a</span> <span class="comment">servlet</span><span class="comment">-</span><span class="comment">specific</span> <span class="comment">error</span> <span class="comment">occurs</span>
+<span class="line-number">115</span> <span class="comment">     * </span><span class="ST0">@throws</span> <span class="comment">IOException</span> <span class="comment">if</span> <span class="comment">an</span> <span class="comment">I</span><span class="comment">/</span><span class="comment">O</span> <span class="comment">error</span> <span class="comment">occurs</span>
+<span class="line-number">116</span>      <span class="comment">*/</span>
+<span class="line-number">117</span>     @Override
+<span class="line-number">118</span>     <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> doGet(HttpServletRequest request, HttpServletResponse response)
+<span class="line-number">119</span>             <span class="keyword-directive">throws</span> ServletException, IOException {
+<span class="line-number">120</span>         processRequest(request, response);
+<span class="line-number">121</span>     }
+<span class="line-number">122</span> 
+<span class="line-number">123</span>     <span class="comment">/**</span> 
+<span class="line-number">124</span> <span class="comment">     * </span><span class="comment">Handles</span> <span class="comment">the</span> <span class="comment">HTTP</span> <span class="ST0">&lt;code&gt;</span><span class="comment">POST</span><span class="ST0">&lt;/code&gt;</span> <span class="comment">method</span><span class="comment">.</span>
+<span class="line-number">125</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">reque</span><span class="comment">st</span> <span class="comment">servlet</span> <span class="comment">request</span>
+<span class="line-number">126</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">response</span> <span class="comment">servlet</span> <span class="comment">response</span>
+<span class="line-number">127</span> <span class="comment">     * </span><span class="ST0">@throws</span> <span class="comment">ServletException</span> <span class="comment">if</span> <span class="comment">a</span> <span class="comment">servlet</span><span class="comment">-</span><span class="comment">specific</span> <span class="comment">error</span> <span class="comment">occurs</span>
+<span class="line-number">128</span> <span class="comment">     * </span><span class="ST0">@throws</span> <span class="comment">IOExce</span><span class="comment">ption</span> <span class="comment">if</span> <span class="comment">an</span> <span class="comment">I</span><span class="comment">/</span><span class="comment">O</span> <span class="comment">error</span> <span class="comment">occurs</span>
+<span class="line-number">129</span>      <span class="comment">*/</span>
+<span class="line-number">130</span>     @Override
+<span class="line-number">131</span>     <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> doPost(HttpServletRequest request, HttpServletResponse response)
+<span class="line-number">132</span>             <span class="keyword-directive">throws</span> ServletException, IOException {
+<span class="line-number">133</span>         processRequest(request, response);
+<span class="line-number">134</span>     }
+<span class="line-number">135</span> 
+<span class="line-number">136</span>     <span class="comment">/**</span> 
+<span class="line-number">137</span> <span class="comment">     * </span><span class="comment">Returns</span> <span class="comment">a</span> <span class="comment">short</span> <span class="comment">description</span> <span class="comment">of</span> <span class="comment">the</span> <span class="comment">servlet</span><span class="comment">.</span>
+<span class="line-number">138</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">a</span> <span class="comment">S</span><span class="comment">tring</span> <span class="comment">containing</span> <span class="comment">servlet</span> <span class="comment">description</span>
+<span class="line-number">139</span>      <span class="comment">*/</span>
+<span class="line-number">140</span>     @Override
+<span class="line-number">141</span>     <span class="keyword-directive">public</span> String getServletInfo() {
+<span class="line-number">142</span>         <span class="keyword-directive">return</span> <span class="character">&quot;</span><span class="character">Short description</span><span class="character">&quot;</span>;
+<span class="line-number">143</span>     }<span class="comment">// &lt;/editor-fold&gt;</span>
+<span class="line-number">144</span> }
+<span class="line-number">145</span> 
+<span class="line-number">146</span> 
+</pre></body>
+</html>

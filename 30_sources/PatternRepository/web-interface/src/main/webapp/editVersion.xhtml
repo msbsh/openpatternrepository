@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="WEB-INF/inc/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+    <ui:param name="currentBrowse" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{common['page.pattern.edit.title']}
+    </ui:define>
+
+    <ui:define name="page">
+
+
+        <ice:form id="#{editVersionCtrl.formId}">
+
+            <ice:panelGroup rendered="#{empty editVersionCtrl.pattern}" >
+                <h1><ice:outputText value="#{help['hint.pattern.view.noPattern.title']}" escape="false" /></h1>
+                <ice:outputText value="#{help['hint.pattern.view.noPattern.content']}" escape="false" />
+            </ice:panelGroup>
+
+            <ice:panelGroup rendered="#{!empty editVersionCtrl.pattern}" >
+
+
+                <div id="result">
+                    <ice:message for="editPatternForm" errorClass="fail" infoClass="success" effect="#{editVersionCtrl.resultEffect}" visible="false"/>
+                </div>
+
+                <h1><h:outputText value="#{common['page.pattern.editVersion']}" /></h1>
+
+                <div class="right">
+                    <ice:commandButton action="#{editVersionCtrl.submitForm}"
+                                       value="#{form['button.submit']}"
+                                       tabindex="98"
+                                       styleClass="confirm"
+                                       id="submitEditVersion"/>
+                    &#160;
+                </div>
+
+                <div id="content">
+                    <h1><ice:outputText value="#{editVersionCtrl.pattern.name}" /></h1>
+
+                    <ice:panelSeries value="#{editVersionCtrl.version.template.textComponents}" var="comp">
+                        <ice:panelSeries value="#{editVersionCtrl.blocks[comp.identifier]}" var="tb">
+                            <ice:panelGroup styleClass="fanPanel">
+
+                                <h2><ice:outputText value="#{comp.name}" />
+                                    <small>
+                                        <ice:commandLink actionListener="#{tb.toggleMode}">
+                                            <ice:outputText value="view" rendered="#{tb.editMode}" />
+                                            <ice:outputText value="edit" rendered="#{!tb.editMode}" />
+                                        </ice:commandLink>
+                                    </small>
+                                </h2>
+                                <ice:inputTextarea value="#{tb.text}"
+                                                   rows="10"
+                                                   styleClass="wikiSyntax wide"
+                                                   partialSubmit="true"
+                                                   style="width: 100%;"
+                                                   rendered="#{tb.editMode}"/>
+                                <ice:outputText escape="false" value="#{func:wiki2html(tb.text)}"
+                                                rendered="#{!tb.editMode}"/>
+                            </ice:panelGroup>
+                        </ice:panelSeries>
+                    </ice:panelSeries>
+                </div>
+
+                <div id="sidebar">
+                    <div id="help">
+                        <ul class="info">
+                            <li class="messages">
+                                <div class="header"></div>
+                                <div class="text">
+                                    <ice:messages layout="list" errorClass="error" warnClass="warning" fatalClass="fatal" infoClass="information" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="header">
+                                    <img src="images/info.png" alt="#{form['label.patternInformation']}" />
+                                </div>
+                                <div class="text">
+                                    <opr:patternMenu pattern="#{editVersionCtrl.pattern}" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{help['pattern.editVersion.common.info.headline']}" /></b><br />
+                                    <ice:outputText value="#{help['pattern.editVersion.common.info.content']}" escape="false" />
+                                </div>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{help['pattern.editVersion.forces']}" /></b><br />
+                                    <ice:outputText value="#{help['pattern.add.common.force']}" escape="false" />
+                                </div>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{help['pattern.editVersion.consequences']}" /></b><br />
+                                    <ice:outputText value="#{help['pattern.add.common.consequence']}" escape="false" />
+                                </div>
+                                <div class="header">
+                                    <img src="images/info.png" alt="information" />
+                                </div>
+                                <div class="text">
+                                    <b><ice:outputText value="#{help['pattern.editVersion.relatedfiles']}" /></b><br />
+                                    <ice:outputText value="#{help['pattern.add.common.formatting']}" escape="false" />
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h2>Common Information</h2>
+                    <br />
+
+                    <ice:outputLabel for="source" value="#{form['label.author']}" />
+
+                    <ice:inputText value="#{editVersionCtrl.version.author}" id="author" tabindex="1" partialSubmit="true">
+                        <f:validateLength maximum="255" />
+                    </ice:inputText>
+
+                    <br /><br />
+
+                    <ice:outputLabel for="source" value="#{form['label.source']}" />
+
+                    <ice:inputText value="#{editVersionCtrl.version.source}" id="source" tabindex="2" partialSubmit="true">
+                        <f:validateLength maximum="255" />
+                    </ice:inputText>
+
+                    <br /><br />
+
+                    <ice:outputLabel for="editLicense" value="#{form['label.license']}" />
+
+                    <ice:selectOneListbox
+                        label="#{form['label.license']}"
+                        size="1"
+                        converter="licenseConverter"
+                        value="#{editVersionCtrl.version.license}"
+                        id="editLicense"
+                        tabindex="3"
+                        partialSubmit="true"
+                        required="true"
+                        >
+                        <f:selectItems value="#{license.licenseSelectItems}" />
+                    </ice:selectOneListbox>
+
+                    <br /><br />
+
+                    <ice:outputLabel for="versionId" value="#{form['label.patternVersion']}" />
+
+                    <ice:outputText id="versionId" value="#{editVersionCtrl.version.id}" />
+
+                    <br /><br />
+
+                    <h2>Forces</h2>
+                    <br />
+                    <ice:commandButton value="Add Force" actionListener="#{editVersionCtrl.addForce}" id="addForce"/>
+                    <br /><br />
+                    <ice:panelSeries value="#{editVersionCtrl.forces}" var="f" id="forces">
+                        <ice:panelGroup  style="border: 1px solid #48a659; width: 90%;color: #fff;background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                            <ice:commandLink actionListener="#{f.toggleMode}" style="color: #48a659; font-weight: bold; text-decoration: none;">
+                                <ice:outputText value="view" rendered="#{f.editMode}" />
+                                <ice:outputText value="edit" rendered="#{!f.editMode}" />
+                            </ice:commandLink>
+                            <ice:commandLink actionListener="#{editVersionCtrl.removeForce}" value="X" immediate="true" style="color: #48a659; font-weight: bold; text-decoration: none;float:right">
+                                <f:attribute value="#{f}" name="force" />
+                            </ice:commandLink>
+                            <ice:panelGroup rendered="#{!f.editMode}">
+                                <b><ice:outputText value="#{f.qualityAttribute.name}" nospan="true"/></b>
+                                <ice:panelGroup styleClass="#{f.impactIndication}" style="display: inline-block;margin-left: 5px;"></ice:panelGroup>
+                                <p>
+                                <ice:outputText value="#{func:shorten(f.description,150)}" />
+                                </p>
+                                <p>
+                                <ice:outputText value="#{f.functionality}" />
+                                </p>
+                            </ice:panelGroup>
+
+                            <ice:panelGroup rendered="#{f.editMode}">
+
+                                <ice:selectOneListbox   value="#{f.qualityAttribute}"
+                                                        style="display: inline-block;"
+                                                        size="1"
+                                                        converter="qualityAttributeConverter">
+                                    <f:selectItem itemValue="" itemLabel="Please Select" />
+                                    <f:selectItems value="#{qualityAttributes.selectItems}" />
+                                </ice:selectOneListbox>
+                                <br />Please Evaluate
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="--" actionListener="#{f.changeQualityAttribute}" styleClass="${f.veryNegative?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="verynegative" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-" actionListener="#{f.changeQualityAttribute}" styleClass="${f.negative?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="negative" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-+" actionListener="#{f.changeQualityAttribute}" styleClass="${f.neutral?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="neutral" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="+" actionListener="#{f.changeQualityAttribute}" styleClass="${f.positive?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="positive" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="++" actionListener="#{f.changeQualityAttribute}" styleClass="${f.veryPositive?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="verypositive" />
+                                </ice:commandLink>
+
+                                <ice:inputTextarea value="#{f.description}" rows="5"/>
+                                <ice:inputText value="#{f.functionality}" />
+                            </ice:panelGroup>
+                        </ice:panelGroup>
+
+                    </ice:panelSeries>
+
+                    <br /><br />
+
+                    <h2>Consequences</h2>
+                    <br />
+                    <ice:commandButton value="Add Consequence" actionListener="#{editVersionCtrl.addConsequence}" id="addConsequence"/>
+                    <br /><br />
+                    <ice:panelSeries value="#{editVersionCtrl.consequences}" var="c" id="consequences">
+                        <ice:panelGroup  style="border: 1px solid #48a659; width: 90%;color: #fff;background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                            <ice:commandLink actionListener="#{c.toggleMode}" style="color: #48a659; font-weight: bold; text-decoration: none;">
+                                <ice:outputText value="view" rendered="#{c.editMode}" />
+                                <ice:outputText value="edit" rendered="#{!c.editMode}" />
+                            </ice:commandLink>
+                            <ice:commandLink actionListener="#{editVersionCtrl.removeConsequence}" value="X" immediate="true" style="color: #48a659; font-weight: bold; text-decoration: none;float:right">
+                                <f:attribute value="#{c}" name="consequence" />
+                            </ice:commandLink>
+                            <ice:panelGroup rendered="#{!c.editMode}">
+                                <b><ice:outputText value="#{c.qualityAttribute.name}" nospan="true"/></b>
+                                <ice:panelGroup styleClass="#{c.impactIndication}" style="display: inline-block;margin-left: 5px;"></ice:panelGroup>
+                                <p>
+                                <ice:outputText value="#{func:shorten(c.description,150)}" />
+                                </p>
+                            </ice:panelGroup>
+
+                            <ice:panelGroup rendered="#{c.editMode}">
+
+                                <ice:selectOneListbox   value="#{c.qualityAttribute}"
+                                                        style="display: inline-block;"
+                                                        size="1"
+                                                        converter="qualityAttributeConverter">
+                                    <f:selectItem itemValue="" itemLabel="Please Select" />
+                                    <f:selectItems value="#{qualityAttributes.selectItems}" />
+                                </ice:selectOneListbox>
+                                <br />Please Evaluate
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="--" actionListener="#{c.changeQualityAttribute}" styleClass="${c.veryNegative?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="verynegative" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-" actionListener="#{c.changeQualityAttribute}" styleClass="${c.negative?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="negative" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="-+" actionListener="#{c.changeQualityAttribute}" styleClass="${c.neutral?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="neutral" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="+" actionListener="#{c.changeQualityAttribute}" styleClass="${c.positive?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="positive" />
+                                </ice:commandLink>
+                                <ice:commandLink style="text-decoration: none; padding-right: 20px;" value="++" actionListener="#{c.changeQualityAttribute}" styleClass="${c.veryPositive?'selected':''}">
+                                    <f:attribute name="IMPACTINDICATOR" value="verypositive" />
+                                </ice:commandLink>
+
+                                <ice:inputTextarea value="#{c.description}" rows="5"/>
+                            </ice:panelGroup>
+                        </ice:panelGroup>
+
+                    </ice:panelSeries>
+
+                    <br /><br />
+
+                    <h2>Related Files</h2>
+                    <div class="text">
+                        <a href="noJs.html" id="showUploadedFilesDialog">Show all available files</a>
+                        <ul id="uploadedFilesDialog" title="Uploaded files">
+                            <ice:repeat value="#{editVersionCtrl.allUploadedFiles}" var="file">
+                                <li><a href="/file/#{file.id}" target="_blank">#{file.name}</a>
+                                <ice:commandLink value="Add" action="#{editVersionCtrl.addUploadedFile(file.id)}"/>
+                                </li>
+                            </ice:repeat>
+                        </ul>
+                        <opr:fileUpload formId="#{editVersionCtrl.formId}" patternVersion="editVersionCtrl.version" />
+                        <br /><br />
+                        <opr:fileList files="#{editVersionCtrl.version.files}" bean="#{editVersionCtrl}" removeCallback="removeFile" />
+                    </div>
+
+                </div>
+            </ice:panelGroup>
+        </ice:form>
+
+    </ui:define>
+
+</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

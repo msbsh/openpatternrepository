@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ice:panelSeries value="#{relationships}" var="relation">
+        <div style="width: 488px;">
+            <div style="display:inline;float:left;">
+                <b>#{relation.patternA.name}</b>
+                &lt; #{relation.type} &gt;
+
+                <b>#{relation.patternB.name}</b>
+                <br />
+                <i>#{relation.description}</i>
+            </div>
+            <ice:commandLink actionListener="#{bean[removeCallback]}" style="float:right;" rendered="#{removeCallback != null}">
+                <img alt="#{common['remove']}" src="images/removeSmall.png" />
+                <f:attribute value="#{relation}" name="RELATIONSHIP" />
+            </ice:commandLink>
+        </div>
+    </ice:panelSeries>
+</ui:composition>

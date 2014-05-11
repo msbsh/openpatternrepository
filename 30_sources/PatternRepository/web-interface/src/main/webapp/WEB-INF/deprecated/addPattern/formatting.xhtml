@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:func="http://www.rug.nl/serach/opr/uitags"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+
+    <div id="content">
+        <h1><ice:outputText value="#{addPatternCtrl.pattern.name}" /></h1>
+        <ice:panelSeries value="#{addPatternCtrl.step.template.textComponents}" 
+                         var="component">
+            <ice:panelSeries value="#{addPatternCtrl.step.blocks[component.identifier]}" var="tb">
+                <ice:panelGroup styleClass="fanPanel" expanded="#{component.mandatory}">
+
+                    <h2><ice:outputText value="#{component.name}" />
+                        <small>
+                            <ice:commandLink actionListener="#{tb.toggleMode}">
+                                <ice:outputText value="view" rendered="#{tb.editMode}" />
+                                <ice:outputText value="edit" rendered="#{!tb.editMode}" />
+                            </ice:commandLink>
+                        </small>
+                    </h2>
+                    <ice:inputTextarea value="#{tb.text}"
+                                       rows="10"
+                                       styleClass="wikiSyntax wide"
+                                       partialSubmit="true"
+                                       style="width: 100%;"
+                                       rendered="#{tb.editMode}"/>
+                    <ice:outputText escape="false" value="#{func:wiki2html(tb.text)}"
+                                    rendered="#{!tb.editMode}"/>
+                </ice:panelGroup>
+            </ice:panelSeries>
+        </ice:panelSeries>
+
+    </div>
+
+    <div id="sidebar">
+        
+        <opr:fileUpload uploadHelper="#{addPatternCtrl.step.upload}" />
+        <br /><br />
+
+        <opr:fileList uploadList="#{addPatternCtrl.step.upload.uploads}" 
+                      uploadHelper="#{addPatternCtrl.step.upload}" />
+        
+
+        <h2>Consequences</h2>
+        <br />
+        <ice:commandButton value="Add Consequence" actionListener="#{addPatternCtrl.step.addConsequence}" />
+        <br /><br />
+        <ice:panelSeries value="#{addPatternCtrl.step.consequences}" var="c">
+            <ice:panelGroup  style="border: 1px solid #48a659; width: 90%;color: #fff;background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                <ice:commandLink actionListener="#{c.toggleMode}" style="color: #48a659; font-weight: bold; text-decoration: none;">
+                    <ice:outputText value="view" rendered="#{c.editMode}" />
+                    <ice:outputText value="edit" rendered="#{!c.editMode}" />
+                </ice:commandLink>
+                <ice:commandLink actionListener="#{addPatternCtrl.step.removeConsequence}" value="X" immediate="true" style="color: #48a659; font-weight: bold; text-decoration: none;float:right">
+                    <f:attribute value="#{c}" name="consequence" />
+                </ice:commandLink>
+                <ice:panelGroup rendered="#{!c.editMode}">
+                    <b><ice:outputText value="#{c.qualityAttribute.name}" nospan="true"/></b>
+                    <ice:panelGroup styleClass="#{c.impactIndication}" style="display: inline-block;margin-left: 5px;"></ice:panelGroup>
+                    <p>
+                    <ice:outputText value="#{func:shorten(c.description,150)}" />
+                    </p>                 
+                </ice:panelGroup>
+
+                <ice:panelGroup rendered="#{c.editMode}">
+
+                    <ice:selectOneListbox   value="#{c.qualityAttribute}"
+                                            style="display: inline-block;"
+                                            size="1"
+                                            converter="qualityAttributeConverter">
+                        <f:selectItem itemValue="" itemLabel="Please Select" />
+                        <f:selectItems value="#{qualityAttributes.selectItems}" />
+                    </ice:selectOneListbox>
+                    <ice:commandLink style="text-decoration: none;" value="--" actionListener="#{c.changeQualityAttribute}" styleClass="${c.veryNegative?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="verynegative" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="-" actionListener="#{c.changeQualityAttribute}" styleClass="${c.negative?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="negative" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="-+" actionListener="#{c.changeQualityAttribute}" styleClass="${c.neutral?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="neutral" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="+" actionListener="#{c.changeQualityAttribute}" styleClass="${c.positive?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="positive" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="++" actionListener="#{c.changeQualityAttribute}" styleClass="${c.veryPositive?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="verypositive" />
+                    </ice:commandLink>
+
+                    <ice:inputTextarea value="#{c.description}" rows="5"/>
+                </ice:panelGroup>
+            </ice:panelGroup>
+
+        </ice:panelSeries>
+
+        <br /><br />
+        <h2>Forces</h2>
+        <br />
+        <ice:commandButton value="Add Force" actionListener="#{addPatternCtrl.step.addForce}" />
+        <br /><br />
+        <ice:panelSeries value="#{addPatternCtrl.step.forces}" var="f">
+            <ice:panelGroup  style="border: 1px solid #48a659; width: 90%;color: #fff;background-color: #82c19c; display: inline-block;margin: 2px;padding: 2px;">
+                <ice:commandLink actionListener="#{f.toggleMode}" style="color: #48a659; font-weight: bold; text-decoration: none;">
+                    <ice:outputText value="view" rendered="#{f.editMode}" />
+                    <ice:outputText value="edit" rendered="#{!f.editMode}" />
+                </ice:commandLink>
+                <ice:commandLink actionListener="#{addPatternCtrl.step.removeForce}" value="X" immediate="true" style="color: #48a659; font-weight: bold; text-decoration: none;float:right">
+                    <f:attribute value="#{f}" name="force" />
+                </ice:commandLink>
+                <ice:panelGroup rendered="#{!f.editMode}">
+                    <b><ice:outputText value="#{f.qualityAttribute.name}" nospan="true"/></b>
+                    <ice:panelGroup styleClass="#{f.impactIndication}" style="display: inline-block;margin-left: 5px;"></ice:panelGroup>
+                    <p>
+                    <ice:outputText value="#{func:shorten(f.description,150)}" />
+                    </p>
+                    <p>
+                    <ice:outputText value="#{f.functionality}" />
+                    </p>
+                </ice:panelGroup>
+
+                <ice:panelGroup rendered="#{f.editMode}">
+
+                    <ice:selectOneListbox   value="#{f.qualityAttribute}"
+                                            style="display: inline-block;"
+                                            size="1"
+                                            converter="qualityAttributeConverter">
+                        <f:selectItem itemValue="" itemLabel="Please Select" />
+                        <f:selectItems value="#{qualityAttributes.selectItems}" />
+                    </ice:selectOneListbox>
+                    <ice:commandLink style="text-decoration: none;" value="--" actionListener="#{f.changeQualityAttribute}" styleClass="${f.veryNegative?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="verynegative" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="-" actionListener="#{f.changeQualityAttribute}" styleClass="${f.negative?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="negative" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="-+" actionListener="#{f.changeQualityAttribute}" styleClass="${f.neutral?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="neutral" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="+" actionListener="#{f.changeQualityAttribute}" styleClass="${f.positive?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="positive" />
+                    </ice:commandLink>
+                    <ice:commandLink style="text-decoration: none;" value="++" actionListener="#{f.changeQualityAttribute}" styleClass="${f.veryPositive?'selected':''}">
+                        <f:attribute name="IMPACTINDICATOR" value="verypositive" />
+                    </ice:commandLink>
+
+                    <ice:inputTextarea value="#{f.description}" rows="5"/>
+                    <ice:inputText value="#{f.functionality}" />
+                </ice:panelGroup>
+            </ice:panelGroup>
+
+        </ice:panelSeries>
+
+
+    </div>
+
+</ui:composition>

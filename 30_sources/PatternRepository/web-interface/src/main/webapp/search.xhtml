@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="WEB-INF/inc/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:opr="http://rug.nl/search/opr/components">
+
+    <ui:param name="currentSearch" value="true" />
+
+    <ui:define name="head">
+        <meta name="description" content="Open Pattern Repository" />
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{common['page.search.title']}
+    </ui:define>
+
+    <ui:define name="page">
+        <ice:form id="search">
+
+            <div id="content">
+
+                <h1><h:outputText value="#{common['page.search.headline']}" /></h1>
+                <h:inputText id="searchQuery" value="#{searchCtrl.fulltext}" style="width:470px;margin-right:2px;"/>
+                <h:commandButton id="searchButton" actionListener="#{searchCtrl.searchIt}" value="#{form['button.search']}" /><br />
+
+                <small>"",NOT,AND,OR,*,?,~</small>
+
+                <ice:panelGroup rendered="#{searchCtrl.results!=null}">
+                    <ice:panelGroup styleClass="searchresults" id="searchresults" rendered="#{searchCtrl.pageCount>0}">
+                        
+                        <opr:searchPaginator />
+
+                        <ui:repeat value="#{searchCtrl.results}" var="result">
+                            <ice:panelGroup styleClass="item">
+                                <h2><a href="wiki/#{result.uniquename}"><h:outputText value="#{result.name}" /></a></h2>
+                                <ice:panelSeries value="#{result.highlighted}" var="highlight">
+                                    <ice:outputText value="#{highlight}" escape="false"/><br />
+                                </ice:panelSeries>
+                                <a href="wiki/#{result.uniquename}">/wiki/#{result.uniquename}</a>
+                            </ice:panelGroup>
+                        </ui:repeat>
+
+                        <opr:searchPaginator />
+
+                    </ice:panelGroup>
+
+                    <ice:panelGroup rendered="#{searchCtrl.pageCount==0}" styleClass="noresults">
+                        #{common['page.search.noResultsFound']}
+                    </ice:panelGroup>
+                </ice:panelGroup>
+            </div>
+
+
+
+
+            <div id="sidebar">
+                <div id="help">
+                    <ul class="info">
+                        <li>
+                            <div class="header">
+                                <img src="images/info.png" alt="information" />
+                            </div>
+                            <div class="text">
+                                <b><ice:outputText value="#{help['search.info.headline']}" /></b><br />
+                                <ice:outputText value="#{help['search.info.general']}" escape="false" />
+
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <img src="images/wildcard.png" alt="information" />
+                            </div>
+                            <div class="text">
+                                <ice:outputText value="#{help['search.info.wildcard']}" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <img src="images/anychar.png" alt="information" />
+                            </div>
+                            <div class="text">
+                                <ice:outputText value="#{help['search.info.anychar']}" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <img src="images/fuzzy.png" alt="information" />
+                            </div>
+                            <div class="text">
+                                <ice:outputText value="#{help['search.info.fuzzy']}" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ice:form>
+    </ui:define>
+
+</ui:composition>

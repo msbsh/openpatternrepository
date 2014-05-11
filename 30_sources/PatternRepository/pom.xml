@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This maven pom.xml combines the projects listed below in the modules section.
+    It is simply present for maven to know where the submodules (EAR,EJB,WAR) are located.
+    If tasks are executed on this project, they are run for each dependant submodule.
+    The pom.xml structure is explained in more detail in the EJB-project (as example).
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>nl.rug.search.opr</groupId>
+  <artifactId>openpatternrepository</artifactId>
+  <packaging>pom</packaging>
+  <version>0.7-SNAPSHOT</version>
+  <name>OpenPatternRepository</name>
+  <url>http://maven.apache.org</url>
+  <modules>
+    <module>startup</module>
+    <module>web-interface</module>
+    <module>pattern-management</module>
+    <module>entities</module>
+    <module>web-services</module>
+  </modules>
+</project>
